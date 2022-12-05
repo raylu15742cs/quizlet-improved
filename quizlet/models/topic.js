@@ -2,14 +2,14 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-var CollectionSchema = new Schema({
+var TopicSchema = new Schema({
   name: { type: String, required: true, minLength: 1, maxLength: 100 },
 });
 
 // Virtual for this genre instance URL.
-CollectionSchema.virtual('url').get(function () {
-  return '/catalog/genre/' + this._id;
+TopicSchema.virtual('url').get(function () {
+  return '/catalog/topic/' + this._id;
 });
 
 // Export model.
-module.exports = mongoose.model('Collection', CollectionSchema);
+module.exports = mongoose.model('Topic', TopicSchema);

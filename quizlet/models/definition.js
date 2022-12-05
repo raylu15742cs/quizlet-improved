@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const DefinitionSchema = new Schema({
-  Definition: { type: String, required: true, minLength: 1 },
+  definition: { type: String, required: true, minLength: 1 },
 });
 
 

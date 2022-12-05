@@ -14,7 +14,7 @@ if (!userArgs[0].startsWith('mongodb')) {
 */
 var async = require('async');
 var Definition  = require("./models/definition")
-var Collection = require("./models/collection")
+var Topic = require("./models/topic")
 var Status = require("./models/status")
 var Title = require("./models/title")
 
@@ -27,14 +27,12 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 var definitions = [];
-var collections = [];
+var topics = [];
 var statuses = [];
 var titles = [];
 
 function definitionCreate(definition, cb) {
-  definitiondetail = { definition};
-
-  var definition = new Definition(definitiondetail);
+  var definition = new Definition({definition: definition});
 
   definition.save(function (err) {
     if (err) {
@@ -47,25 +45,25 @@ function definitionCreate(definition, cb) {
   });
 }
 
-function collectionCreate(name, cb) {
-  var collection = new Collection({ name: name });
+function topicCreate(name, cb) {
+  var topic = new Topic({ name: name });
 
-  collection.save(function (err) {
+  topic.save(function (err) {
     if (err) {
       cb(err, null);
       return;
     }
-    console.log('New Genre: ' + collection);
-    collections.push(collection);
-    cb(null, collection);
+    console.log('New Genre: ' + topic);
+    topics.push(topic);
+    cb(null, topic);
   });
 }
 
-function titleCreate(title, definition, collection, cb) {
+function titleCreate(title, definition, topic, cb) {
   titledetail = {
     title: title,
     definition: definition,
-    collection: collection,
+    topic: topic,
   };
 
   var title = new Title(titledetail);
@@ -98,17 +96,17 @@ function statuseCreate(title, status, cb) {
     cb(null, title);
   });
 }
-function createCollection(cb) {
+function createTopic(cb) {
   async.series(
     [
       function(callback) {
-        collectionCreate("Nodejs" , callback);
+        topicCreate("Nodejs" , callback);
       },
       function(callback) {
-        collectionCreate("TypeScript" , callback);
+        topicCreate("TypeScript" , callback);
       },
       function(callback) {
-        collectionCreate("JavaScript", callback)
+        topicCreate("JavaScript", callback)
       }
     ],
     //optional callback
@@ -119,57 +117,67 @@ function createCollection(cb) {
 function createDefinition(cb) {
   async.series(
     [
-    function (callback) {
-      definitionCreate('first def', callback);
-    },
-    function (callback) {
-      definitionCreate('second def', callback);
-    },
-    function (callback) {
-      definitionCreate('third def', callback);
-    },
-    function (callback) {
-      definitionCreate('fourth def', callback);
-    },
-    function (callback) {
-      definitionCreate('fifth def', callback);
-    },
-    function (callback) {
-      definitionCreate('sixth def', callback);
-    },
-  ],
-  //optional callback
-  cb
+      function (callback) {
+        definitionCreate('first def', callback);
+      },
+      function (callback) {
+        definitionCreate('second def', callback);
+      },
+      function (callback) {
+        definitionCreate('third def', callback);
+      },
+      function (callback) {
+        definitionCreate('fourth def', callback);
+      },
+      function (callback) {
+        definitionCreate('fifth def', callback);
+      },
+      function (callback) {
+        definitionCreate('sixth def', callback);
+      },
+      function (callback) {
+        definitionCreate('seventh def', callback);
+      },
+      function (callback) {
+        definitionCreate('eighth def', callback);
+      },
+      function (callback) {
+        definitionCreate('ninth def', callback);
+      },
+    ],
+    //optional callback
+    cb
   );
 }
+
 function createTitles(cb) {
   async.parallel([
     function (callback) {
-      titleCreate('Node.js1', definitions[0], [collections[0]], callback);
+      titleCreate('Node.js1', definitions[0], [topics[0]], callback);
     },
     function (callback) {
-      titleCreate('Node.js2', definitions[1], [collections[0]], callback);
+      titleCreate('Node.js2', definitions[1], [topics[0]], callback);
     },
     function (callback) {
-      titleCreate('Node.js3', definitions[2], [collections[0]], callback);
+      titleCreate('Node.js3', definitions[2], [topics[0]], callback);
     },
     function (callback) {
-      titleCreate('TypeScript1', definitions[3], [collections[1]], callback);
+      titleCreate('TypeScript1', definitions[3], [topics[1]], callback);
     },
     function (callback) {
-      titleCreate('TypeScript2', definitions[4], [collections[1]], callback);
+      titleCreate('TypeScript2', definitions[4], [topics[1]], callback);
     },
     function (callback) {
-      titleCreate('TypeScript3', definitions[5], [collections[1]], callback);
+      titleCreate('TypeScript3', definitions[5], [topics[1]], callback);
     },
     function (callback) {
-      titleCreate('JavaScript1', definitions[6], [collections[2]], callback);
+      titleCreate('JavaScript1', definitions[6], [topics[2]], callback);
     },
     function (callback) {
-      titleCreate('JavaScript2', definitions[7], [collections[2]], callback);
+      titleCreate('JavaScript2', definitions[7], [topics[2]], callback);
     },
     function (callback) {
-      titleCreate('JavaScript3', definitions[8], [collections[2]], callback);
+      titleCreate('JavaScript3', definitions[8], [topics[2]], callback);
     },
   ],
   //optional callback
@@ -214,12 +222,13 @@ function createStatuses(cb) {
 
 
 async.series(
-  [createCollection, createDefinition, createStatuses, createTitles],
+  [ createTopic, createDefinition, createTitles, createStatuses],
   // Optional callback
   function (err, results) {
     if (err) {
       console.log('FINAL ERR: ' + err);
     } else {
+      console.log("Success")
       console.log('Status: ' + status);
     }
     // All done, disconnect from database
