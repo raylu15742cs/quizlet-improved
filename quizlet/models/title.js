@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const TitleSchema = new Schema({
   title: { type: String, required: true },
   definition: { type: Schema.Types.ObjectId, ref: 'Definition', required: true },
-  status: [{ type: Schema.Types.ObjectId, ref: 'Status' }],
+  collection: [{ type: Schema.Types.ObjectId, ref: 'Collection' }],
 });
 
 // Virtual for book's URL
