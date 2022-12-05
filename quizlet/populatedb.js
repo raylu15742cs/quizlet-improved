@@ -60,24 +60,22 @@ function collectionCreate(name, cb) {
   });
 }
 
-function bookCreate(title, summary, isbn, author, genre, cb) {
-  bookdetail = {
+function titleCreate(title, definition, status, cb) {
+  titledetail = {
     title: title,
-    summary: summary,
-    author: author,
-    isbn: isbn,
+    definition: definition,
+    status: status,
   };
-  if (genre != false) bookdetail.genre = genre;
 
-  var book = new Book(bookdetail);
-  book.save(function (err) {
+  var title = new Title(titledetail);
+  title.save(function (err) {
     if (err) {
       cb(err, null);
       return;
     }
-    console.log('New Book: ' + book);
-    books.push(book);
-    cb(null, book);
+    console.log('New Card: ' + title);
+    titles.push(title);
+    cb(null, title);
   });
 }
 
