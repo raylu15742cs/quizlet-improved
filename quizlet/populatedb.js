@@ -13,10 +13,10 @@ if (!userArgs[0].startsWith('mongodb')) {
 }
 */
 var async = require('async');
-var definition  = require("./models/definition")
-var collection = require("./models/collection")
-var status = require("./models/status")
-var title = require("./models/title")
+var Definition  = require("./models/definition")
+var Collection = require("./models/collection")
+var Status = require("./models/status")
+var Title = require("./models/title")
 
 var mongoose = require('mongoose');
 var mongoDB = userArgs[0];
@@ -79,57 +79,66 @@ function titleCreate(title, definition, status, cb) {
   });
 }
 
-function bookInstanceCreate(book, imprint, due_back, status, cb) {
-  bookinstancedetail = {
-    book: book,
-    imprint: imprint,
+function StatuseCreate(title, status, cb) {
+  statusdetail = {
+    title: title,
+    status: status,
   };
-  if (due_back != false) bookinstancedetail.due_back = due_back;
-  if (status != false) bookinstancedetail.status = status;
 
-  var bookinstance = new BookInstance(bookinstancedetail);
-  bookinstance.save(function (err) {
+  var status = new Status(statusdetail);
+  status.save(function (err) {
     if (err) {
-      console.log('ERROR CREATING BookInstance: ' + bookinstance);
+      console.log('ERROR CREATING Status: ' + status);
       cb(err, null);
       return;
     }
-    console.log('New BookInstance: ' + bookinstance);
-    bookinstances.push(bookinstance);
-    cb(null, book);
+    console.log('New Status: ' + status);
+    statuses.push(status);
+    cb(null, title);
   });
 }
-
-function createGenreAuthors(cb) {
+function createCollection(cb) {
   async.series(
     [
-      function (callback) {
-        authorCreate('Patrick', 'Rothfuss', '1973-06-06', false, callback);
+      function(callback) {
+        collectionCreate("Nodejs" , callback);
       },
-      function (callback) {
-        authorCreate('Ben', 'Bova', '1932-11-8', false, callback);
+      function(callback) {
+        collectionCreate("TypeScript" , callback);
       },
-      function (callback) {
-        authorCreate('Isaac', 'Asimov', '1920-01-02', '1992-04-06', callback);
-      },
-      function (callback) {
-        authorCreate('Bob', 'Billings', false, false, callback);
-      },
-      function (callback) {
-        authorCreate('Jim', 'Jones', '1971-12-16', false, callback);
-      },
-      function (callback) {
-        genreCreate('Fantasy', callback);
-      },
-      function (callback) {
-        genreCreate('Science Fiction', callback);
-      },
-      function (callback) {
-        genreCreate('French Poetry', callback);
-      },
+      function(callback) {
+        collectionCreate("JavaScript", callback)
+      }
     ],
-    // optional callback
+    //optional callback
     cb
+  )
+}
+
+function createDefinition(cb) {
+  async.series(
+    [
+    function (callback) {
+      definitionCreate('first def', callback);
+    },
+    function (callback) {
+      definitionCreate('second def', callback);
+    },
+    function (callback) {
+      definitionCreate('third def', callback);
+    },
+    function (callback) {
+      definitionCreate('fourth def', callback);
+    },
+    function (callback) {
+      definitionCreate('fifth def', callback);
+    },
+    function (callback) {
+      definitionCreate('sixth def', callback);
+    },
+  ],
+  //optional callback
+  cb
   );
 }
 
