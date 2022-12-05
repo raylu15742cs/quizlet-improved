@@ -60,11 +60,11 @@ function collectionCreate(name, cb) {
   });
 }
 
-function titleCreate(title, definition, status, cb) {
+function titleCreate(title, definition, collection, cb) {
   titledetail = {
     title: title,
     definition: definition,
-    status: status,
+    collection: collection,
   };
 
   var title = new Title(titledetail);
@@ -141,7 +141,37 @@ function createDefinition(cb) {
   cb
   );
 }
-
+function createTitles(cb) {
+  async.parallel([
+    function (callback) {
+      titleCreate('Node.js1', definitions[0], [collections[0]], callback);
+    },
+    function (callback) {
+      titleCreate('Node.js2', definitions[1], [collections[0]], callback);
+    },
+    function (callback) {
+      titleCreate('Node.js3', definitions[2], [collections[0]], callback);
+    },
+    function (callback) {
+      titleCreate('TypeScript1', definitions[3], [collections[1]], callback);
+    },
+    function (callback) {
+      titleCreate('TypeScript2', definitions[4], [collections[1]], callback);
+    },
+    function (callback) {
+      titleCreate('TypeScript3', definitions[5], [collections[1]], callback);
+    },
+    function (callback) {
+      titleCreate('JavaScript1', definitions[6], [collections[2]], callback);
+    },
+    function (callback) {
+      titleCreate('JavaScript2', definitions[7], [collections[2]], callback);
+    },
+    function (callback) {
+      titleCreate('JavaScript3', definitions[8], [collections[2]], callback);
+    },
+  ]);
+}
 function createBooks(cb) {
   async.parallel(
     [
