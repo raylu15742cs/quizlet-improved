@@ -46,17 +46,17 @@ function definitionCreate(definition, cb) {
   });
 }
 
-function genreCreate(name, cb) {
-  var genre = new Genre({ name: name });
+function collectionCreate(name, cb) {
+  var collection = new Collection({ name: name });
 
-  genre.save(function (err) {
+  collection.save(function (err) {
     if (err) {
       cb(err, null);
       return;
     }
-    console.log('New Genre: ' + genre);
-    genres.push(genre);
-    cb(null, genre);
+    console.log('New Genre: ' + collection);
+    collections.push(collection);
+    cb(null, collection);
   });
 }
 
