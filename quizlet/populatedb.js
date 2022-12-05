@@ -170,7 +170,10 @@ function createTitles(cb) {
     function (callback) {
       titleCreate('JavaScript3', definitions[8], [collections[2]], callback);
     },
-  ]);
+  ],
+  //optional callback
+  cb
+  );
 }
 function createBooks(cb) {
   async.parallel(
