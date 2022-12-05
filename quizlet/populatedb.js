@@ -13,7 +13,7 @@ if (!userArgs[0].startsWith('mongodb')) {
 }
 */
 var async = require('async');
-var author  = require("./models/definition")
+var definition  = require("./models/definition")
 var collection = require("./models/collection")
 var status = require("./models/status")
 var title = require("./models/title")
@@ -25,26 +25,24 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-var authors = [];
-var genres = [];
-var books = [];
-var bookinstances = [];
+var definitions = [];
+var collections = [];
+var statuses = [];
+var titles = [];
 
-function authorCreate(first_name, family_name, d_birth, d_death, cb) {
-  authordetail = { first_name: first_name, family_name: family_name };
-  if (d_birth != false) authordetail.date_of_birth = d_birth;
-  if (d_death != false) authordetail.date_of_death = d_death;
+function definitionCreate(definition, cb) {
+  definitiondetail = { definition};
 
-  var author = new Author(authordetail);
+  var definition = new Definition(definitiondetail);
 
-  author.save(function (err) {
+  definition.save(function (err) {
     if (err) {
       cb(err, null);
       return;
     }
-    console.log('New Author: ' + author);
-    authors.push(author);
-    cb(null, author);
+    console.log('New Definition: ' + definition);
+    definitions.push(definition);
+    cb(null, definition);
   });
 }
 
