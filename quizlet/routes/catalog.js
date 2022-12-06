@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Require controller modules.
 const title_controller = require('../controllers/titleController');
-const definitions_controller = require('../controllers/definitionsController');
+const definition_controller = require('../controllers/definitionController');
 const topic_controller = require('../controllers/topicController');
 const status_controller = require('../controllers/statusController');
 
@@ -36,31 +36,31 @@ router.get('/title/:id', title_controller.title_detail);
 // GET request for list of all title items.
 router.get('/titles', title_controller.title_list);
 
-/// definitions ROUTES ///
+/// definition ROUTES ///
 
-// GET request for creating definitions. NOTE This must come before route for id (i.e. display definitions).
-router.get('/definitions/create', definitions_controller.definitions_create_get);
+// GET request for creating definition. NOTE This must come before route for id (i.e. display definition).
+router.get('/definition/create', definition_controller.definition_create_get);
 
-// POST request for creating definitions.
-router.post('/definitions/create', definitions_controller.definitions_create_post);
+// POST request for creating definition.
+router.post('/definition/create', definition_controller.definition_create_post);
 
-// GET request to delete definitions.
-router.get('/definitions/:id/delete', definitions_controller.definitions_delete_get);
+// GET request to delete definition.
+router.get('/definition/:id/delete', definition_controller.definition_delete_get);
 
-// POST request to delete definitions.
-router.post('/definitions/:id/delete', definitions_controller.definitions_delete_post);
+// POST request to delete definition.
+router.post('/definition/:id/delete', definition_controller.definition_delete_post);
 
-// GET request to update definitions.
-router.get('/definitions/:id/update', definitions_controller.definitions_update_get);
+// GET request to update definition.
+router.get('/definition/:id/update', definition_controller.definition_update_get);
 
-// POST request to update definitions.
-router.post('/definitions/:id/update', definitions_controller.definitions_update_post);
+// POST request to update definition.
+router.post('/definition/:id/update', definition_controller.definition_update_post);
 
-// GET request for one definitions.
-router.get('/definitions/:id', definitions_controller.definitions_detail);
+// GET request for one definition.
+router.get('/definition/:id', definition_controller.definition_detail);
 
-// GET request for list of all definitionss.
-router.get('/definitionss', definitions_controller.definitions_list);
+// GET request for list of all definitions.
+router.get('/definitions', definition_controller.definition_list);
 
 /// topic ROUTES ///
 

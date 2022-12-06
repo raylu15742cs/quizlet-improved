@@ -1,5 +1,9 @@
 const Title = require("../models/title");
 
+exports.index = (req, res) => {
+  res.send('NOT IMPLEMENTED: Site Home Page');
+};
+
 // Display list of all titles.
 exports.title_list = (req, res) => {
     res.send("NOT IMPLEMENTED: title List");
