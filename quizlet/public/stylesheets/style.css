@@ -473,7 +473,15 @@ video {
   display: block;
 }
 
-.text-6xl {
-  font-size: 3.75rem;
-  line-height: 1;
+.flex {
+  display: flex;
+}
+
+.pt-5 {
+  padding-top: 1.25rem;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 } 

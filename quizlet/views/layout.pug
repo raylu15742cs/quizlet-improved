@@ -3,13 +3,13 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block sidebar 
+  body.flex(class="pt-5")
+    block sidebar
       ul(class='sidebar-nav')
-        li.text-6xl
+        li.text-4xl
           a(href='/catalog') Home
-        li
+        li.text-4xl
           a(href='/catalog/topics') All Collections 
-        li
+        li.text-4xl
           a(href='/catalog/cards') All Cards
     block content
