@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Require controller modules.
-const title_controller = require('../controllers/titleController');
+const title_controller = require('../controllers/cardController');
 const definition_controller = require('../controllers/definitionController');
 const topic_controller = require('../controllers/topicController');
 const status_controller = require('../controllers/statusController');
@@ -10,31 +10,31 @@ const status_controller = require('../controllers/statusController');
 /// title ROUTES ///
 
 // GET catalog home page.
-router.get('/', title_controller.index);
+router.get('/', card_controller.index);
 
-// GET request for creating a title. NOTE This must come before routes that display title (uses id).
-router.get('/title/create', title_controller.title_create_get);
+// GET request for creating a card. NOTE This must come before routes that display card (uses id).
+router.get('/card/create', card_controller.card_create_get);
 
-// POST request for creating title.
-router.post('/title/create', title_controller.title_create_post);
+// POST request for creating card.
+router.post('/card/create', card_controller.card_create_post);
 
-// GET request to delete title.
-router.get('/title/:id/delete', title_controller.title_delete_get);
+// GET request to delete card.
+router.get('/card/:id/delete', card_controller.card_delete_get);
 
-// POST request to delete title.
-router.post('/title/:id/delete', title_controller.title_delete_post);
+// POST request to delete card.
+router.post('/card/:id/delete', card_controller.card_delete_post);
 
-// GET request to update title.
-router.get('/title/:id/update', title_controller.title_update_get);
+// GET request to update card.
+router.get('/card/:id/update', card_controller.card_update_get);
 
-// POST request to update title.
-router.post('/title/:id/update', title_controller.title_update_post);
+// POST request to update card.
+router.post('/card/:id/update', card_controller.card_update_post);
 
-// GET request for one title.
-router.get('/title/:id', title_controller.title_detail);
+// GET request for one card.
+router.get('/card/:id', card_controller.card_detail);
 
-// GET request for list of all title items.
-router.get('/titles', title_controller.title_list);
+// GET request for list of all card items.
+router.get('/cards', card_controller.card_list);
 
 /// definition ROUTES ///
 
