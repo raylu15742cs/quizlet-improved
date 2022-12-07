@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Require controller modules.
-const title_controller = require('../controllers/cardController');
+const card_controller = require('../controllers/cardController');
 const definition_controller = require('../controllers/definitionController');
 const topic_controller = require('../controllers/topicController');
 const status_controller = require('../controllers/statusController');
