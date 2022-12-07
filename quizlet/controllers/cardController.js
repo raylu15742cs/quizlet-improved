@@ -1,5 +1,6 @@
 const Card = require("../models/card");
 const Topic = require("../models/topic");
+const Status = require("../models/status")
 
 const async = require("async")
 
@@ -24,8 +25,16 @@ exports.index = (req, res) => {
 };
 
 // Display list of all cards.
-exports.card_list = (req, res) => {
-    res.send("NOT IMPLEMENTED: card List");
+exports.card_list = (req, res, next) => {
+    Card.find({}, "card status")
+      .sort({card:1})
+      .populate("status")
+      .exec(function(err, list_cards) {
+        if(err) {
+          return next(err)
+        }
+        res.render("card_list", {title: "Card List", card_list: list_cards})
+      })
 }
 
 // Display detail page for a specific card.
