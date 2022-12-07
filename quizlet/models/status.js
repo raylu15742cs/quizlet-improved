@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const StatusSchema = new Schema({
-  title: { type: Schema.Types.ObjectId, ref: 'Title', required: true }, // reference to the associated book
+  card: { type: Schema.Types.ObjectId, ref: 'Title', required: true }, // reference to the associated book
   status: {
     type: String,
     required: true,

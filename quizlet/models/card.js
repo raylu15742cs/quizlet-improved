@@ -2,17 +2,18 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const TitleSchema = new Schema({
-  title: { type: String, required: true },
+const CardSchema = new Schema({
+  card: { type: String, required: true },
   definition: { type: Schema.Types.ObjectId, ref: 'Definition', required: true },
+  status: {type: Schema.Types.ObjectId, ref:"Status"},
   topic: [{ type: Schema.Types.ObjectId, ref: 'Topic' }],
 });
 
 // Virtual for book's URL
-TitleSchema.virtual('url').get(function () {
+CardSchema.virtual('url').get(function () {
   // We don't use an arrow function as we'll need the this object
-  return `/catalog/title/${this._id}`;
+  return `/catalog/card/${this._id}`;
 });
 
 // Export model
-module.exports = mongoose.model('Title', TitleSchema);
+module.exports = mongoose.model('Card', CardSchema);

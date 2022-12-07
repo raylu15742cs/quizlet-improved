@@ -78,11 +78,11 @@ function cardCreate(card, definition, topic, cb) {
   });
 }
 
-function statuseCreate(card, status, cb) {
+function statusCreate(card, status, cb) {
   statusdetail = {
     card: card,
-    status: status,
   };
+  if (status != false) statusdetail.status = status;
 
   var status = new Status(statusdetail);
   status.save(function (err) {
@@ -187,31 +187,31 @@ function createCards(cb) {
 function createStatuses(cb) {
   async.parallel([
     function (callback) {
-      statuseCreate(cards[0], 'Beginner', callback);
+      statusCreate(cards[0], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(cards[1], 'Beginner', callback);
+      statusCreate(cards[1], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(cards[2], 'Beginner', callback);
+      statusCreate(cards[2], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(cards[3], 'Beginner', callback);
+      statusCreate(cards[3], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(cards[4], 'Beginner', callback);
+      statusCreate(cards[4], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(cards[5], 'Beginner', callback);
+      statusCreate(cards[5], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(cards[6], 'Beginner', callback);
+      statusCreate(cards[6], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(cards[7], 'Beginner', callback);
+      statusCreate(cards[7], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(cards[8], 'Beginner', callback);
+      statusCreate(cards[8], 'Beginner', callback);
     },
   ],
   //optional callback
