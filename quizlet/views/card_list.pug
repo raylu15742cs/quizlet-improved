@@ -1,13 +1,13 @@
 extends layout 
 
 block content 
-    h1= title 
+    h1(class="text-3xl text-center mb-10")= title 
     ul(class="flex flex-wrap") 
         each card in card_list 
             li 
-                div(class="indCards rounded border-4 border-black p-5 m-3")
-                    a(href=card.url) #{card.card}
+                div(class="indCards rounded border-4 border-black px-5 py-7 m-3")
+                    a(href=card.url class="text-2xl") #{card.card}
                     p Definition: #{card.definition}
-                    p Status : #{card.status}
+                    p(class="text-sm") Status : #{card.status}
         else 
             li There are no books
