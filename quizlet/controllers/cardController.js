@@ -4,7 +4,23 @@ const Topic = require("../models/topic");
 const async = require("async")
 
 exports.index = (req, res) => {
-  res.send('NOT IMPLEMENTED: Site Home Page');
+  async.parallel(
+    {
+      card_count(callback){
+        Card.countDocuments({}, callback)
+      },
+      topic_count(callback){
+        Topic.countDocuments({}, callback)
+      },
+    },
+    (err, result) => {
+      res.render("index", {
+        title: "Quizlet Improved",
+        error: err,
+        data: result,
+      })
+    }
+  )
 };
 
 // Display list of all cards.
