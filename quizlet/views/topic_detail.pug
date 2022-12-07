@@ -1,16 +1,16 @@
 extends layout 
 
-blocl content 
+block content 
 
-h1 Topic: #{topic.name}
+    h1 Topic: #{topic.name}
 
-div 
-    h4 Cards 
+    div 
+        h4 Cards 
 
-    dl
-        each card in topic_cards    
-            dt 
-                a(href=card.url) #{card.title}
-            dd #{card.definition}
-        else 
-            p There is no cards in this topic
+        dl
+            each card in topic_cards    
+                dt 
+                    a(href=card.url) #{card.card}
+                dd #{card.definition}
+            else 
+                p There is no cards in this topic

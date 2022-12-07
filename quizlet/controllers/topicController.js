@@ -26,14 +26,14 @@ exports.topic_detail = (req, res, next) => {
         Topic.findById(req.params.id).exec(callback);
       },
       topic_cards(callback){
-        Card.find({topic: req.param.id}).exec(callback);
+        Card.find({topic:req.params.id}).exec(callback);
       }
     },
-    (err, result) => {
+    (err, results) => {
       if(err) {
         return next(err);
       }
-      if(results.genre == null) {
+      if(results.topic == null) {
         //No Result.
         const err = new Error("Topic not found");
         err.status = 404;
@@ -43,7 +43,7 @@ exports.topic_detail = (req, res, next) => {
       res.render("topic_detail", {
         title: "Topic Detail",
         topic: results.topic,
-        topic_cards: result.topic_cards,
+        topic_cards: results.topic_cards,
       })
     }
   )
