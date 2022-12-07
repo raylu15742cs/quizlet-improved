@@ -6,6 +6,6 @@ block content
         each card in card_list 
             li 
                 a(href=card.url) #{card.card}  
-                | #{card.status}
+                p Status : #{card.status}
         else 
             li There are no books
