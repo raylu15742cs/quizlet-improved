@@ -36,8 +36,34 @@ exports.card_list = (req, res, next) => {
 }
 
 // Display detail page for a specific card.
-exports.card_detail = (req , res) => {
-    res.send(`NOT IMPLEMENTED: card Details: ${req.params.id}`)
+exports.card_detail = (req , res, next) => {
+  async.parallel(
+    {
+      card(callback){
+        Card.findById(req.params.id)
+        .populate("topic")
+        .populate("information")
+        .populate("status")
+        .exec(callback)
+      },
+    },
+    (err, results) => {
+      if(err) {
+        return next(err);
+      }
+      if(results.card == null) {
+        // No card
+        const err = new Error('Card not found');
+        err.status = 404;
+        return next(err);
+      }
+      //Success
+      res.render("card_detail", {
+        title: results.card.card,
+        card: results.card
+      })
+    }
+  )
 }
 
 // Display card create form on GET.
