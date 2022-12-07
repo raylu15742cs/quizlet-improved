@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var TopicSchema = new Schema({
-  name: { type: String, required: true, minLength: 1, maxLength: 100 },
+  topic: { type: String, required: true, minLength: 1, maxLength: 100 },
 });
 
 // Virtual for this genre instance URL.

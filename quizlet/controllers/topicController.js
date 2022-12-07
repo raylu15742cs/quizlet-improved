@@ -1,8 +1,19 @@
 const Topic = require('../models/topic');
 
 // Display list of all topics.
-exports.topic_list = (req, res) => {
-  res.send('NOT IMPLEMENTED: topic List');
+exports.topic_list = (req, res, next) => {
+  Topic.find()
+    .sort({topic:1})
+    .exed(function(err, list_topics){
+      if(err) {
+        return next(err)
+      }
+      //successful, so render
+      res.render("topic_List", {
+        title: "Topic List",
+        topic_list: list_topics
+      })
+    })
 };
 
 // Display detail page for a specific topic.
