@@ -15,7 +15,6 @@ exports.index = (req, res) => {
     },
     (err, result) => {
       res.render("index", {
-        title: "Quizlet Improved",
         error: err,
         data: result,
       })
@@ -25,7 +24,7 @@ exports.index = (req, res) => {
 
 // Display list of all cards.
 exports.card_list = (req, res, next) => {
-    Card.find({}, "card status")
+    Card.find({}, "card definition status")
       .sort({card:1})
       .exec(function(err, list_cards) {
         if(err) {

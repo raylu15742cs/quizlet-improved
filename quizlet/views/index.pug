@@ -1,9 +1,8 @@
 extends layout
 
 block content
-  div.hero
-    h1= title
+  div.hero(class="flex flex-col items-center min-w-[100%]")
+    h1(class="text-4xl pb-10") Welcome to Quizlet Improved by Raymond Lu
     ul 
-     li Collection: #{data.topic_count}
-     li Cards: #{data.card_count}
+     li There are #{data.topic_count} collections and #{data.card_count} cards
 

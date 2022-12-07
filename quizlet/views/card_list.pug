@@ -2,10 +2,12 @@ extends layout
 
 block content 
     h1= title 
-    ul 
+    ul(class="flex flex-wrap") 
         each card in card_list 
             li 
-                a(href=card.url) #{card.card}
-                |  Status : #{card.status}
+                div(class="indCards rounded border-4 border-black p-5 m-3")
+                    a(href=card.url) #{card.card}
+                    p Definition: #{card.definition}
+                    p Status : #{card.status}
         else 
             li There are no books
