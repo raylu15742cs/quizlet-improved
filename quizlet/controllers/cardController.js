@@ -42,7 +42,7 @@ exports.card_detail = (req , res, next) => {
       card(callback){
         Card.findById(req.params.id)
         .populate("topic")
-        .populate("information")
+        .populate("definition")
         .populate("status")
         .exec(callback)
       },

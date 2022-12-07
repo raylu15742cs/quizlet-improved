@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const CardSchema = new Schema({
   card: { type: String, required: true },
-  information: { type: String, required: true },
+  definition: { type: String, required: true },
   status: {
     type: String,
     required: true,

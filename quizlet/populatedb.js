@@ -41,10 +41,10 @@ function topicCreate(name, cb) {
   });
 }
 
-function cardCreate(card, information, topic, cb) {
+function cardCreate(card, definition, topic, cb) {
   carddetail = {
     card: card,
-    information: information,
+    definition: definition,
     topic: topic,
   };
 
