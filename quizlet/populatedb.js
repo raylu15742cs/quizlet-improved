@@ -15,11 +15,9 @@ if (!userArgs[0].startsWith('mongodb')) {
 var async = require('async');
 var Definition  = require("./models/definition")
 var Topic = require("./models/topic")
-var Status = require("./models/status")
 var Card = require("./models/card")
 
 var mongoose = require('mongoose');
-const status = require('./models/status');
 var mongoDB = userArgs[0];
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
@@ -28,7 +26,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 var definitions = [];
 var topics = [];
-var statuses = [];
 var cards = [];
 
 function definitionCreate(definition, cb) {
@@ -59,11 +56,10 @@ function topicCreate(name, cb) {
   });
 }
 
-function cardCreate(card, definition, status, topic, cb) {
+function cardCreate(card, definition, topic, cb) {
   carddetail = {
     card: card,
     definition: definition,
-    status: status,
     topic: topic,
   };
 
@@ -154,31 +150,31 @@ function createDefinition(cb) {
 function createCards(cb) {
   async.parallel([
     function (callback) {
-      cardCreate('Node.js1', definitions[0],statuses[0], [topics[0]], callback);
+      cardCreate('Node.js1', definitions[0], [topics[0]], callback);
     },
     function (callback) {
-      cardCreate('Node.js2', definitions[1], statuses[1], [topics[0]], callback);
+      cardCreate('Node.js2', definitions[1], [topics[0]], callback);
     },
     function (callback) {
-      cardCreate('Node.js3', definitions[2], statuses[2], [topics[0]], callback);
+      cardCreate('Node.js3', definitions[2], [topics[0]], callback);
     },
     function (callback) {
-      cardCreate('TypeScript1', definitions[3],statuses[3], [topics[1]], callback);
+      cardCreate('TypeScript1', definitions[3], [topics[1]], callback);
     },
     function (callback) {
-      cardCreate('TypeScript2', definitions[4], statuses[4], [topics[1]], callback);
+      cardCreate('TypeScript2', definitions[4], [topics[1]], callback);
     },
     function (callback) {
-      cardCreate('TypeScript3', definitions[5], statuses[5], [topics[1]], callback);
+      cardCreate('TypeScript3', definitions[5], [topics[1]], callback);
     },
     function (callback) {
-      cardCreate('JavaScript1', definitions[6],statuses[6], [topics[2]], callback);
+      cardCreate('JavaScript1', definitions[6], [topics[2]], callback);
     },
     function (callback) {
-      cardCreate('JavaScript2', definitions[7],statuses[7],[topics[2]], callback);
+      cardCreate('JavaScript2', definitions[7],[topics[2]], callback);
     },
     function (callback) {
-      cardCreate('JavaScript3', definitions[8],statuses[8], [topics[2]], callback);
+      cardCreate('JavaScript3', definitions[8], [topics[2]], callback);
     },
   ],
   //optional callback
@@ -196,7 +192,7 @@ async.series(
       console.log('FINAL ERR: ' + err);
     } else {
       console.log('Success');
-      console.log('Status: ' + status);
+      console.log('Card: ' + Card);
     }
     // All done, disconnect from database
     mongoose.connection.close();
