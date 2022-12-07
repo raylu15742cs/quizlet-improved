@@ -16,7 +16,7 @@ var async = require('async');
 var Definition  = require("./models/definition")
 var Topic = require("./models/topic")
 var Status = require("./models/status")
-var Title = require("./models/title")
+var Card = require("./models/card")
 
 var mongoose = require('mongoose');
 const status = require('./models/status');
@@ -29,7 +29,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 var definitions = [];
 var topics = [];
 var statuses = [];
-var titles = [];
+var cards = [];
 
 function definitionCreate(definition, cb) {
   var definition = new Definition({definition: definition});
@@ -59,28 +59,28 @@ function topicCreate(name, cb) {
   });
 }
 
-function titleCreate(title, definition, topic, cb) {
-  titledetail = {
-    title: title,
+function cardCreate(card, definition, topic, cb) {
+  carddetail = {
+    card: card,
     definition: definition,
     topic: topic,
   };
 
-  var title = new Title(titledetail);
-  title.save(function (err) {
+  var card = new Card(carddetail);
+  card.save(function (err) {
     if (err) {
       cb(err, null);
       return;
     }
-    console.log('New Card: ' + title);
-    titles.push(title);
-    cb(null, title);
+    console.log('New Card: ' + card);
+    cards.push(card);
+    cb(null, card);
   });
 }
 
-function statuseCreate(title, status, cb) {
+function statuseCreate(card, status, cb) {
   statusdetail = {
-    title: title,
+    card: card,
     status: status,
   };
 
@@ -93,7 +93,7 @@ function statuseCreate(title, status, cb) {
     }
     console.log('New Status: ' + status);
     statuses.push(status);
-    cb(null, title);
+    cb(null, card);
   });
 }
 function createTopic(cb) {
@@ -150,34 +150,34 @@ function createDefinition(cb) {
   );
 }
 
-function createTitles(cb) {
+function createCards(cb) {
   async.parallel([
     function (callback) {
-      titleCreate('Node.js1', definitions[0], [topics[0]], callback);
+      cardCreate('Node.js1', definitions[0], [topics[0]], callback);
     },
     function (callback) {
-      titleCreate('Node.js2', definitions[1], [topics[0]], callback);
+      cardCreate('Node.js2', definitions[1], [topics[0]], callback);
     },
     function (callback) {
-      titleCreate('Node.js3', definitions[2], [topics[0]], callback);
+      cardCreate('Node.js3', definitions[2], [topics[0]], callback);
     },
     function (callback) {
-      titleCreate('TypeScript1', definitions[3], [topics[1]], callback);
+      cardCreate('TypeScript1', definitions[3], [topics[1]], callback);
     },
     function (callback) {
-      titleCreate('TypeScript2', definitions[4], [topics[1]], callback);
+      cardCreate('TypeScript2', definitions[4], [topics[1]], callback);
     },
     function (callback) {
-      titleCreate('TypeScript3', definitions[5], [topics[1]], callback);
+      cardCreate('TypeScript3', definitions[5], [topics[1]], callback);
     },
     function (callback) {
-      titleCreate('JavaScript1', definitions[6], [topics[2]], callback);
+      cardCreate('JavaScript1', definitions[6], [topics[2]], callback);
     },
     function (callback) {
-      titleCreate('JavaScript2', definitions[7], [topics[2]], callback);
+      cardCreate('JavaScript2', definitions[7], [topics[2]], callback);
     },
     function (callback) {
-      titleCreate('JavaScript3', definitions[8], [topics[2]], callback);
+      cardCreate('JavaScript3', definitions[8], [topics[2]], callback);
     },
   ],
   //optional callback
@@ -187,31 +187,31 @@ function createTitles(cb) {
 function createStatuses(cb) {
   async.parallel([
     function (callback) {
-      statuseCreate(titles[0], 'Beginner', callback);
+      statuseCreate(cards[0], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(titles[1], 'Beginner', callback);
+      statuseCreate(cards[1], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(titles[2], 'Beginner', callback);
+      statuseCreate(cards[2], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(titles[3], 'Beginner', callback);
+      statuseCreate(cards[3], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(titles[4], 'Beginner', callback);
+      statuseCreate(cards[4], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(titles[5], 'Beginner', callback);
+      statuseCreate(cards[5], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(titles[6], 'Beginner', callback);
+      statuseCreate(cards[6], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(titles[7], 'Beginner', callback);
+      statuseCreate(cards[7], 'Beginner', callback);
     },
     function (callback) {
-      statuseCreate(titles[8], 'Beginner', callback);
+      statuseCreate(cards[8], 'Beginner', callback);
     },
   ],
   //optional callback
@@ -222,7 +222,7 @@ function createStatuses(cb) {
 
 
 async.series(
-  [ createTopic, createDefinition, createTitles, createStatuses],
+  [ createTopic, createDefinition, createCards, createStatuses],
   // Optional callback
   function (err, results) {
     if (err) {

@@ -1,4 +1,7 @@
 const Card = require("../models/card");
+const Topic = require("../models/topic");
+
+const async = require("async")
 
 exports.index = (req, res) => {
   res.send('NOT IMPLEMENTED: Site Home Page');
