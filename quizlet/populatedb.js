@@ -13,7 +13,6 @@ if (!userArgs[0].startsWith('mongodb')) {
 }
 */
 var async = require('async');
-var Definition  = require("./models/definition")
 var Topic = require("./models/topic")
 var Card = require("./models/card")
 
@@ -24,23 +23,9 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-var definitions = [];
 var topics = [];
 var cards = [];
 
-function definitionCreate(definition, cb) {
-  var definition = new Definition({definition: definition});
-
-  definition.save(function (err) {
-    if (err) {
-      cb(err, null);
-      return;
-    }
-    console.log('New Definition: ' + definition);
-    definitions.push(definition);
-    cb(null, definition);
-  });
-}
 
 function topicCreate(name, cb) {
   var topic = new Topic({ name: name });
@@ -75,24 +60,6 @@ function cardCreate(card, definition, topic, cb) {
   });
 }
 
-function statusCreate(card, status, cb) {
-  statusdetail = {
-    card: card,
-  };
-  if (status != false) statusdetail.status = status;
-
-  var status = new Status(statusdetail);
-  status.save(function (err) {
-    if (err) {
-      console.log('ERROR CREATING Status: ' + status);
-      cb(err, null);
-      return;
-    }
-    console.log('New Status: ' + status);
-    statuses.push(status);
-    cb(null, card);
-  });
-}
 function createTopic(cb) {
   async.series(
     [
@@ -111,70 +78,35 @@ function createTopic(cb) {
   )
 }
 
-function createDefinition(cb) {
-  async.series(
-    [
-      function (callback) {
-        definitionCreate('first def', callback);
-      },
-      function (callback) {
-        definitionCreate('second def', callback);
-      },
-      function (callback) {
-        definitionCreate('third def', callback);
-      },
-      function (callback) {
-        definitionCreate('fourth def', callback);
-      },
-      function (callback) {
-        definitionCreate('fifth def', callback);
-      },
-      function (callback) {
-        definitionCreate('sixth def', callback);
-      },
-      function (callback) {
-        definitionCreate('seventh def', callback);
-      },
-      function (callback) {
-        definitionCreate('eighth def', callback);
-      },
-      function (callback) {
-        definitionCreate('ninth def', callback);
-      },
-    ],
-    //optional callback
-    cb
-  );
-}
 
 function createCards(cb) {
   async.parallel([
     function (callback) {
-      cardCreate('Node.js1', definitions[0], [topics[0]], callback);
+      cardCreate('Node.js1', 'first def', [topics[0]], callback);
     },
     function (callback) {
-      cardCreate('Node.js2', definitions[1], [topics[0]], callback);
+      cardCreate('Node.js2', 'second def', [topics[0]], callback);
     },
     function (callback) {
-      cardCreate('Node.js3', definitions[2], [topics[0]], callback);
+      cardCreate('Node.js3', 'third def', [topics[0]], callback);
     },
     function (callback) {
-      cardCreate('TypeScript1', definitions[3], [topics[1]], callback);
+      cardCreate('TypeScript1', 'fourth def', [topics[1]], callback);
     },
     function (callback) {
-      cardCreate('TypeScript2', definitions[4], [topics[1]], callback);
+      cardCreate('TypeScript2', 'fifth def', [topics[1]], callback);
     },
     function (callback) {
-      cardCreate('TypeScript3', definitions[5], [topics[1]], callback);
+      cardCreate('TypeScript3', 'sixth def', [topics[1]], callback);
     },
     function (callback) {
-      cardCreate('JavaScript1', definitions[6], [topics[2]], callback);
+      cardCreate('JavaScript1', 'seventh def', [topics[2]], callback);
     },
     function (callback) {
-      cardCreate('JavaScript2', definitions[7],[topics[2]], callback);
+      cardCreate('JavaScript2', 'eigth def', [topics[2]], callback);
     },
     function (callback) {
-      cardCreate('JavaScript3', definitions[8], [topics[2]], callback);
+      cardCreate('JavaScript3', 'ninth def', [topics[2]], callback);
     },
   ],
   //optional callback
@@ -185,7 +117,7 @@ function createCards(cb) {
 
 
 async.series(
-  [createTopic, createDefinition, createCards],
+  [createTopic, createCards],
   // Optional callback
   function (err, results) {
     if (err) {

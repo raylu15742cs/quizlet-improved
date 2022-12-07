@@ -3,7 +3,6 @@ const router = express.Router();
 
 // Require controller modules.
 const card_controller = require('../controllers/cardController');
-const definition_controller = require('../controllers/definitionController');
 const topic_controller = require('../controllers/topicController');
 
 /// title ROUTES ///
@@ -34,32 +33,6 @@ router.get('/card/:id', card_controller.card_detail);
 
 // GET request for list of all card items.
 router.get('/cards', card_controller.card_list);
-
-/// definition ROUTES ///
-
-// GET request for creating definition. NOTE This must come before route for id (i.e. display definition).
-router.get('/definition/create', definition_controller.definition_create_get);
-
-// POST request for creating definition.
-router.post('/definition/create', definition_controller.definition_create_post);
-
-// GET request to delete definition.
-router.get('/definition/:id/delete', definition_controller.definition_delete_get);
-
-// POST request to delete definition.
-router.post('/definition/:id/delete', definition_controller.definition_delete_post);
-
-// GET request to update definition.
-router.get('/definition/:id/update', definition_controller.definition_update_get);
-
-// POST request to update definition.
-router.post('/definition/:id/update', definition_controller.definition_update_post);
-
-// GET request for one definition.
-router.get('/definition/:id', definition_controller.definition_detail);
-
-// GET request for list of all definitions.
-router.get('/definitions', definition_controller.definition_list);
 
 /// topic ROUTES ///
 
