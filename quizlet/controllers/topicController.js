@@ -3,13 +3,12 @@ const Topic = require('../models/topic');
 // Display list of all topics.
 exports.topic_list = (req, res, next) => {
   Topic.find()
-    .sort({topic:1})
-    .exed(function(err, list_topics){
+    .exec(function(err, list_topics){
       if(err) {
         return next(err)
       }
       //successful, so render
-      res.render("topic_List", {
+      res.render("topic_list", {
         title: "Topic List",
         topic_list: list_topics
       })
