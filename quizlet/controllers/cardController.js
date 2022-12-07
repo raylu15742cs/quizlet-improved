@@ -1,6 +1,5 @@
 const Card = require("../models/card");
 const Topic = require("../models/topic");
-const Status = require("../models/status")
 
 const async = require("async")
 
@@ -28,7 +27,6 @@ exports.index = (req, res) => {
 exports.card_list = (req, res, next) => {
     Card.find({}, "card status")
       .sort({card:1})
-      .populate("status")
       .exec(function(err, list_cards) {
         if(err) {
           return next(err)

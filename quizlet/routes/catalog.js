@@ -5,7 +5,6 @@ const router = express.Router();
 const card_controller = require('../controllers/cardController');
 const definition_controller = require('../controllers/definitionController');
 const topic_controller = require('../controllers/topicController');
-const status_controller = require('../controllers/statusController');
 
 /// title ROUTES ///
 
@@ -88,48 +87,5 @@ router.get('/topic/:id', topic_controller.topic_detail);
 // GET request for list of all topic.
 router.get('/topics', topic_controller.topic_list);
 
-/// status ROUTES ///
-
-// GET request for creating a status. NOTE This must come before route that displays status (uses id).
-router.get(
-  '/status/create',
-  status_controller.status_create_get
-);
-
-// POST request for creating status.
-router.post(
-  '/status/create',
-  status_controller.status_create_post
-);
-
-// GET request to delete status.
-router.get(
-  '/status/:id/delete',
-  status_controller.status_delete_get
-);
-
-// POST request to delete status.
-router.post(
-  '/status/:id/delete',
-  status_controller.status_delete_post
-);
-
-// GET request to update status.
-router.get(
-  '/status/:id/update',
-  status_controller.status_update_get
-);
-
-// POST request to update status.
-router.post(
-  '/status/:id/update',
-  status_controller.status_update_post
-);
-
-// GET request for one status.
-router.get('/status/:id', status_controller.status_detail);
-
-// GET request for list of all status.
-router.get('/statuses', status_controller.status_list);
 
 module.exports = router;

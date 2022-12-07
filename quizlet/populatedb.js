@@ -59,10 +59,11 @@ function topicCreate(name, cb) {
   });
 }
 
-function cardCreate(card, definition, topic, cb) {
+function cardCreate(card, definition, status, topic, cb) {
   carddetail = {
     card: card,
     definition: definition,
+    status: status,
     topic: topic,
   };
 
@@ -153,65 +154,31 @@ function createDefinition(cb) {
 function createCards(cb) {
   async.parallel([
     function (callback) {
-      cardCreate('Node.js1', definitions[0], [topics[0]], callback);
+      cardCreate('Node.js1', definitions[0],statuses[0], [topics[0]], callback);
     },
     function (callback) {
-      cardCreate('Node.js2', definitions[1], [topics[0]], callback);
+      cardCreate('Node.js2', definitions[1], statuses[1], [topics[0]], callback);
     },
     function (callback) {
-      cardCreate('Node.js3', definitions[2], [topics[0]], callback);
+      cardCreate('Node.js3', definitions[2], statuses[2], [topics[0]], callback);
     },
     function (callback) {
-      cardCreate('TypeScript1', definitions[3], [topics[1]], callback);
+      cardCreate('TypeScript1', definitions[3],statuses[3], [topics[1]], callback);
     },
     function (callback) {
-      cardCreate('TypeScript2', definitions[4], [topics[1]], callback);
+      cardCreate('TypeScript2', definitions[4], statuses[4], [topics[1]], callback);
     },
     function (callback) {
-      cardCreate('TypeScript3', definitions[5], [topics[1]], callback);
+      cardCreate('TypeScript3', definitions[5], statuses[5], [topics[1]], callback);
     },
     function (callback) {
-      cardCreate('JavaScript1', definitions[6], [topics[2]], callback);
+      cardCreate('JavaScript1', definitions[6],statuses[6], [topics[2]], callback);
     },
     function (callback) {
-      cardCreate('JavaScript2', definitions[7], [topics[2]], callback);
+      cardCreate('JavaScript2', definitions[7],statuses[7],[topics[2]], callback);
     },
     function (callback) {
-      cardCreate('JavaScript3', definitions[8], [topics[2]], callback);
-    },
-  ],
-  //optional callback
-  cb
-  );
-}
-function createStatuses(cb) {
-  async.parallel([
-    function (callback) {
-      statusCreate(cards[0], 'Beginner', callback);
-    },
-    function (callback) {
-      statusCreate(cards[1], 'Beginner', callback);
-    },
-    function (callback) {
-      statusCreate(cards[2], 'Beginner', callback);
-    },
-    function (callback) {
-      statusCreate(cards[3], 'Beginner', callback);
-    },
-    function (callback) {
-      statusCreate(cards[4], 'Beginner', callback);
-    },
-    function (callback) {
-      statusCreate(cards[5], 'Beginner', callback);
-    },
-    function (callback) {
-      statusCreate(cards[6], 'Beginner', callback);
-    },
-    function (callback) {
-      statusCreate(cards[7], 'Beginner', callback);
-    },
-    function (callback) {
-      statusCreate(cards[8], 'Beginner', callback);
+      cardCreate('JavaScript3', definitions[8],statuses[8], [topics[2]], callback);
     },
   ],
   //optional callback
@@ -222,13 +189,13 @@ function createStatuses(cb) {
 
 
 async.series(
-  [ createTopic, createDefinition, createCards, createStatuses],
+  [createTopic, createDefinition, createCards],
   // Optional callback
   function (err, results) {
     if (err) {
       console.log('FINAL ERR: ' + err);
     } else {
-      console.log("Success")
+      console.log('Success');
       console.log('Status: ' + status);
     }
     // All done, disconnect from database

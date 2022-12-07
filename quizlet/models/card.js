@@ -5,7 +5,12 @@ const Schema = mongoose.Schema;
 const CardSchema = new Schema({
   card: { type: String, required: true },
   definition: { type: Schema.Types.ObjectId, ref: 'Definition', required: true },
-  status: {type: Schema.Types.ObjectId, ref:"Status"},
+  status: {
+    type: String,
+    required: true,
+    enum: ['Beginner', 'Intermediate', 'Advance', 'Master'],
+    default: 'Beginner',
+  },
   topic: [{ type: Schema.Types.ObjectId, ref: 'Topic' }],
 });
 
