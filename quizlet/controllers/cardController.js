@@ -3,6 +3,7 @@ const Topic = require("../models/topic");
 
 const async = require("async")
 const { body, validationResult } = require('express-validator');
+const card = require("../models/card");
 
 
 exports.index = (req, res) => {
@@ -205,8 +206,45 @@ exports.card_delete_post = (req, res, next) => {
 };
 
 // Display card update form on GET.
-exports.card_update_get = (req, res) => {
-  res.send("NOT IMPLEMENTED: card update GET");
+exports.card_update_get = (req, res, next) => {
+  // Get card and topic for form
+  async.parallel(
+    {
+      card(callback) {
+        Card.findById(req.params.id)
+          .populate("topic")
+          .exec(callback);
+      },
+      topics(callback){
+        Topic.find(callback)
+      }
+    },
+    (err, results) => {
+      if (err) {
+        return next(err)
+      }
+      if(results.card == null) {
+        //no result
+        const err = new Error("Card not found")
+        err.status = 404
+        return next(err)
+      }
+      // Success
+      // Mark Selected Topics
+      for( const topic of results.topics) {
+        for (const cardTopic of results.card.topic) {
+          if(topic._id.toString() === cardTopic._id.toString()) {
+            topic.checked = "true";
+          }
+        }
+      }
+      res.render("card_form", {
+        title: "Update Card",
+        card: results.book,
+        topic: results.topics
+      })
+    }
+  )
 };
 
 // Handle card update on POST.
