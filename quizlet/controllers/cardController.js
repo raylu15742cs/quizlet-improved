@@ -120,7 +120,7 @@ exports.card_create_post = [
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/error messages.
 
-      // Get all authors and genres for form.
+      // Get all topics for form.
       async.parallel(
         {
           topics(callback) {
@@ -248,6 +248,73 @@ exports.card_update_get = (req, res, next) => {
 };
 
 // Handle card update on POST.
-exports.card_update_post = (req, res) => {
-  res.send("NOT IMPLEMENTED: card update POST");
-};
+exports.card_update_post = [
+  // Convert topic to an array
+  (req, res, next) => {
+    if(!Array.isArray(req.body.topic)) {
+      req.body.topic = typeof req.body.topic === "undefined" ? [] : [req.body.topic];
+    }
+    next()
+  },
+
+  // Validate and sanitize fields
+  body('card', 'Card Name must not be empty').trim().isLength({ min: 1 }).escape(),
+  body('definition', 'Definition must not be empty').trim().isLength({ min: 1 }).escape(),
+  body("status").escape(),
+  body("topic.*").escape(),
+
+  // Process request after validation and sanitization
+  (req, res , next) => {
+    // Process validation request
+    const errors = validationResult(req);
+
+    const card = new Card({
+      card: req.body.card,
+      definition: req.body.definition,
+      status: req.body.status,
+      topic: req.body.topic,
+      _id: req.params.id // Required or else new id will be assigned
+    });
+    
+    if (!errors.isEmpty()) {
+      // There are errors. Render form again with sanitized values/error messages.
+
+      // Get all topics for form.
+      async.parallel(
+        {
+          topics(callback) {
+            Topic.find(callback);
+          },
+        },
+        (err, results) => {
+          if (err) {
+            return next(err);
+          }
+          // Mark Topic selected
+          for (const topic of results.topics) {
+            if (card.topic.includes(topic._id)) {
+              topic.checked = 'true';
+            }
+          }
+          res.render('card_form', {
+            title: 'Create Card',
+            topics: results.topics,
+            card,
+            errors: errors.array(),
+          });
+        }
+      );
+      return;
+    }
+
+    // Data is valid, time to update
+    Card.findByIdAndUpdate(req.params.id, card, {} , (err, thecard) => {
+      if(err) {
+        return next(err)
+      }
+      // Successful: redirect to card detail page
+      res.redirect(thebook.url)
+    })
+  }
+
+]
