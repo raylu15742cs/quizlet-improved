@@ -1,4 +1,18 @@
 extend layout 
 
 block content 
-    h1 Delete Topic
+    h1 #{title}: #{topic.name}
+    if topic_cards.length  
+
+        p #[strong Delete the following cards before attempting to delete this topics.]
+        div     
+            h4 Cards 
+            dl 
+            each card in topic_cards 
+                dt 
+                    a(href=card.url) #{card.card} 
+    else 
+        p Do you really want to delete this Topic?
+        form(method="POST" action="")
+            input(type="hidden", name="topicid", required="true", value=topic._id)
+            button(type="submit") Delete

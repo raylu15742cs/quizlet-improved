@@ -125,7 +125,7 @@ exports.topic_delete_get = (req, res, next) => {
       res.render("topic_delete", {
         title: "Delete Topic",
         topic: results.topic,
-        topic_cards: results.authors_books,
+        topic_cards: results.topic_cards,
       })
     }
   )
@@ -147,7 +147,23 @@ exports.topic_delete_post = (req, res, next) => {
         return next(err)
       }
       //Success
-      
+      if(results.topic_cards.length > 0) {
+        // Topic still has cards / render back as get
+        res.render("topic_delete", {
+          title: "Delete Topic",
+          topic: results.topic,
+          topic_cards: results.topic_cards
+        });
+        return;
+      }
+      //Topic has no cards / Delete topic and return to list of topics
+      Topic.findByIdAndRemove(req.body.topicid , (err) => {
+        if(err) {
+          return next(err);
+        }
+        // Success return to topic list
+        res.redirect("/catalog/topics")
+      })
     }
   )
 };
