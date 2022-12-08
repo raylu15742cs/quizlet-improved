@@ -239,9 +239,9 @@ exports.card_update_get = (req, res, next) => {
         }
       }
       res.render("card_form", {
-        title: "Update Card",
-        card: results.book,
-        topic: results.topics
+        title: "Update Card get",
+        card: results.card,
+        topics: results.topics
       })
     }
   )
@@ -297,7 +297,7 @@ exports.card_update_post = [
             }
           }
           res.render('card_form', {
-            title: 'Create Card',
+            title: 'Create Card post',
             topics: results.topics,
             card,
             errors: errors.array(),
@@ -313,7 +313,7 @@ exports.card_update_post = [
         return next(err)
       }
       // Successful: redirect to card detail page
-      res.redirect(thebook.url)
+      res.redirect(thecard.url)
     })
   }
 

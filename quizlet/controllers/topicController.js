@@ -169,8 +169,8 @@ exports.topic_delete_post = (req, res, next) => {
 };
 
 // Display topic update form on GET.
-exports.topic_update_get = (req, res) => {
-  res.send('NOT IMPLEMENTED: topic update GET');
+exports.topic_update_get = (req, res, next) => {
+  // get 
 };
 
 // Handle topic update on POST.
