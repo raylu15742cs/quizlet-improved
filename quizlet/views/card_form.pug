@@ -1,0 +1,30 @@
+extend layout 
+
+block content 
+    h1= title 
+
+    form(method="POST" action="")
+        .form-group(class="flex flex-col")
+            label(for="title") CardName: 
+                input(type="text", placeholder="Card Name" name="title" required="true")
+            label(for="title") Definition: 
+                input(type="text", placeholder="Card Definitions" name="definition" required="true")
+            label(for="title") Collection: 
+                for topic in topics    
+                    input(type="checkbox" name="topic", id=topic_id, value=topic.id checked=topic.checked)
+                    label(for=topic.id) #{topic.name}
+            label(for="status") Status:
+            select(type="select" placeholder="Select Status" name="status" required="true")
+                option(value="Beginner") Beginner
+                option(value="Intermediate") Intermediate
+                option(value="Advance") Advance
+                option(value="Master") Master  
+            button(type="submit") Submit
+
+
+
+
+    if errors
+        ul
+            for error in errors
+                li!= error.msg

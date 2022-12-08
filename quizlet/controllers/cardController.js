@@ -81,7 +81,7 @@ exports.card_create_get = (req, res, next) => {
       }
       res.render("card_form", {
         title : "Create Card",
-        topic: results.topic
+        topics: results.topic
       })
     }
   )
