@@ -71,7 +71,7 @@ exports.card_detail = (req , res, next) => {
 exports.card_create_get = (req, res, next) => {
   async.parallel(
     {
-      topic(callback) {
+      topics(callback) {
         Topic.find(callback)
       },
     },
@@ -81,7 +81,7 @@ exports.card_create_get = (req, res, next) => {
       }
       res.render("card_form", {
         title : "Create Card",
-        topics: results.topic
+        topics: results.topics
       })
     }
   )
@@ -121,7 +121,7 @@ exports.card_create_post = [
       // Get all authors and genres for form.
       async.parallel(
         {
-          topic(callback) {
+          topics(callback) {
             Topic.find(callback)
           },  
         },
@@ -130,14 +130,14 @@ exports.card_create_post = [
             return next(err);
           }
           // Mark Topic selected
-          for (const topic of results.topic) {
+          for (const topic of results.topics) {
             if (card.topic.includes(topic._id)){
               topic.checked = "true"
             }
           }
           res.render("card_form", {
             title: "Create Card",
-            topic: results.topic,
+            topics: results.topics,
             card,
             errors: errors.array()
           })
@@ -146,6 +146,7 @@ exports.card_create_post = [
       }
       // Data from form is valid. Save card.
     card.save((err) => {
+      console.log("made it here")
       if (err) {
         return next(err);
       }

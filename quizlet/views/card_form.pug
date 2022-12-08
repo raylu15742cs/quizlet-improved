@@ -7,9 +7,9 @@ block content
         .form-group(class="flex flex-col")
             label(for="title") CardName: 
                 input(type="text", placeholder="Card Name" name="title" required="true")
-            label(for="title") Definition: 
+            label(for="definition") Definition: 
                 input(type="text", placeholder="Card Definitions" name="definition" required="true")
-            label(for="title") Collection: 
+            label(for="topic") Collection: 
                 for topic in topics    
                     input(type="checkbox" name="topic", id=topic_id, value=topic.id checked=topic.checked)
                     label(for=topic.id) #{topic.name}
