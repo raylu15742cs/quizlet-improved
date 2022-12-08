@@ -53,55 +53,54 @@ exports.topic_detail = (req, res, next) => {
 };
 
 // Display topic create form on GET.
-exports.topic_create_get = [
+exports.topic_create_get = (req, res , next) => {
+  res.render("topic_form", {title: "Create Topic"})
+}
+
+// Handle topic create on POST.
+exports.topic_create_post = [
   //Validate and Sanitize the field
-  bode("name", "No Topic Name").trim().isLength({min:1}).escape(),
+  body('name', 'No Topic Name').trim().isLength({ min: 1 }).escape(),
 
   // Process after validation and sanitization
   (req, res, next) => {
-
     // Validation errors from a request
-    const errors = validationResult(req)
+    const errors = validationResult(req);
 
     // Create a topic object with trimmed data
-    const topic = new Topic({name: req.body.name});
+    const topic = new Topic({ name: req.body.name });
 
-    if(!errors.isEmpty()){
+    if (!errors.isEmpty()) {
       // There is errors, so re render form with sanitized values and error messages
-      res.render("topic_form", {
-        title: "Create Topics",
+      res.render('topic_form', {
+        title: 'Create Topics',
         topic,
         errors: errors.array(),
-      })
+      });
       return;
     } else {
       // Data form is valid (No Errors)
       // Need to check if topic already exist
-      Topic.findOne({name: req.body.name}).exec((err, found_topuc) => {
-        if(err) {
-          return next(err)
+      Topic.findOne({ name: req.body.name }).exec((err, found_topic) => {
+        if (err) {
+          return next(err);
         }
-        if(found_topic) {
+        if (found_topic) {
           // Topic Exist, redirect to Topic Detail List
           res.redirect(topic.url);
         } else {
           topic.save((err) => {
-            if(err) {
-              return next(err)
+            if (err) {
+              return next(err);
             }
             //Topic Saved
-            res.redirect(topic.url)
-          })
+            res.redirect(topic.url);
+          });
         }
-      })
+      });
     }
-  }
-]
-
-// Handle topic create on POST.
-exports.topic_create_post = (req, res) => {
-  res.send('NOT IMPLEMENTED: topic create POST');
-};
+  },
+];
 
 // Display topic delete form on GET.
 exports.topic_delete_get = (req, res) => {

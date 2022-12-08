@@ -37,10 +37,10 @@ router.get('/cards', card_controller.card_list);
 /// topic ROUTES ///
 
 // GET request for creating a topic. NOTE This must come before route that displays topic (uses id).
-router.get('/topic/create', topic_controller.topic_create_get);
+router.get('/topics/create', topic_controller.topic_create_get);
 
 //POST request for creating topic.
-router.post('/topic/create', topic_controller.topic_create_post);
+router.post('/topics/create', topic_controller.topic_create_post);
 
 // GET request to delete topic.
 router.get('/topic/:id/delete', topic_controller.topic_delete_get);
