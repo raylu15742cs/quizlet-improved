@@ -197,6 +197,48 @@ exports.topic_update_get = (req, res, next) => {
 };
 
 // Handle topic update on POST.
-exports.topic_update_post = (req, res) => {
-  res.send('NOT IMPLEMENTED: topic update POST');
-};
+exports.topic_update_post = [
+  (req, res, next) => {
+
+    //Validate and Sanitize the field
+    body('name', 'No Topic Name').trim().isLength({ min: 1 }).escape(),
+
+    // Process request after valication
+    (req, res, next) => {
+      const errors = validationResult(req);
+
+      // Create a topic object with trimmed data
+      const topic = new Topic({ name: req.body.name });
+
+      if(!errors.isEmpty()) {
+        // If there is error re render with sanited values and error
+        res.render("topic_form", {
+          title: "Create Topic",
+          topic,
+          errors: errors()
+        });
+        return
+      } else {
+        // Data is valid
+        //Check if Topic with existing name already exist
+        Topic.findOne({name: req.body.name}).exec((err, found_topic) => {
+          if(err) {
+            return next(err);
+          }
+          if(found_topic) {
+            // Topic already exist, redirect to details page
+            res.redirect(found_topic.url);
+          } else {
+            Topic.findByIdAndUpdate(req.params.id, topic, {} , (err, thetopic) => {
+              if(err) {
+                return next(err)
+              }
+              // Topic saved and updated. Redirect to topic page
+              res.redirect(thetopic.url)
+            })
+          }
+        })
+      }
+    }
+  }
+]
