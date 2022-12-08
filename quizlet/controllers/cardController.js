@@ -173,7 +173,7 @@ exports.card_delete_get = (req, res, next) => {
         res.redirect("/catalog/cards")
       }
       //Successful , render delete form
-      res.render("topic_delete", {
+      res.render("card_delete", {
         title: "Delete Card",
         card: results.card
       })

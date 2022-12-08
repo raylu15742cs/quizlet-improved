@@ -1,0 +1,8 @@
+extends layout 
+
+block content 
+    h1 #{title}: #{card.card}
+    p Do you really want to delete this Card?
+    form(method="POST" action="")
+        input(type="hidden", name="cardid", required="true", value=card._id)
+        button(type="submit") Delete
