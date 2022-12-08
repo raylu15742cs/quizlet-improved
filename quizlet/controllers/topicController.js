@@ -174,7 +174,7 @@ exports.topic_update_get = (req, res, next) => {
   async.parallel(
     {
       topic(callback) {
-        Topic.find(callback)
+        Topic.findById(req.params.id).exec(callback)
       }
     },
     (err, results) => {
