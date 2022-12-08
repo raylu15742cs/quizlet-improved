@@ -170,7 +170,30 @@ exports.topic_delete_post = (req, res, next) => {
 
 // Display topic update form on GET.
 exports.topic_update_get = (req, res, next) => {
-  // get 
+  // get Topic for form
+  async.parallel(
+    {
+      topic(callback) {
+        Topic.find(callback)
+      }
+    },
+    (err, results) => {
+      if(err) {
+        return next(err)
+      }
+      if(results.topic == null) {
+        // no topic
+        const err = new Error ("Topic not found")
+        err.status = 404
+        return next(err)
+      }
+      // Success
+      res.render("topic_form" , {
+        title: "Update Topic get",
+        topic: results.topic
+      })
+    }
+  )
 };
 
 // Handle topic update on POST.

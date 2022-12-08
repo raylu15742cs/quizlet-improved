@@ -239,7 +239,7 @@ exports.card_update_get = (req, res, next) => {
         }
       }
       res.render("card_form", {
-        title: "Update Card get",
+        title: "Update Card",
         card: results.card,
         topics: results.topics
       })
@@ -297,7 +297,7 @@ exports.card_update_post = [
             }
           }
           res.render('card_form', {
-            title: 'Create Card post',
+            title: 'Create Card',
             topics: results.topics,
             card,
             errors: errors.array(),
