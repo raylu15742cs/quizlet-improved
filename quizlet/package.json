@@ -7,7 +7,7 @@
     "devstart": "nodemon ./bin/www",
     "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart ",
     "tailwind:css": "postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css",
-    "serverstartandTailwind": "concurrently \"DEBUG=express-locallibrary-tutorial:* npm run devstart \" \"postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css --watch\""
+    "startservertailwind": "concurrently \"DEBUG=express-locallibrary-tutorial:* npm run devstart \" \"postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css --watch\""
   },
   "dependencies": {
     "async": "^3.2.4",
