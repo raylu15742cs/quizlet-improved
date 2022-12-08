@@ -92,15 +92,16 @@ exports.card_create_post = [
   // Convert Topic to an array
   (req, res, next) => {
     if (!Array.isArray(req.body.topic)) {
+      console.log(req.body.topic)
       req.body.topic =
-        typeof req.body.genre === 'undefinied ' ? [] : [req.body.genre];
+        typeof req.body.genre==='undefined' ? [] : [req.body.genre];
     }
     next();
   },
 
   // Validate and sanitize fields
-  body('Card', 'Card Name must not be empty').trim().isLength({ min: 1 }).escape(),
-  body('Definition', 'Definition must not be empty').trim().isLength({ min: 1 }).escape(),
+  body('card', 'Card Name must not be empty').trim().isLength({ min: 1 }).escape(),
+  body('definition', 'Definition must not be empty').trim().isLength({ min: 1 }).escape(),
   body("status").escape(),
   body("topic.*").escape(),
 
