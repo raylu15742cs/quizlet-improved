@@ -2,6 +2,8 @@ const Card = require("../models/card");
 const Topic = require("../models/topic");
 
 const async = require("async")
+const { body, validationResult } = require('express-validator');
+
 
 exports.index = (req, res) => {
   async.parallel(
@@ -66,8 +68,23 @@ exports.card_detail = (req , res, next) => {
 }
 
 // Display card create form on GET.
-exports.card_create_get = (req, res) => {
-  res.send("NOT IMPLEMENTED: card create GET");
+exports.card_create_get = (req, res, next) => {
+  async.parallel(
+    {
+      topic(callback) {
+        Topic.find(callback)
+      },
+    },
+    (err , results) => {
+      if(err) {
+        return next(err);
+      }
+      res.render("card_form", {
+        title : "Create Card",
+        topic: results.topic
+      })
+    }
+  )
 };
 
 // Handle card create on POST.
