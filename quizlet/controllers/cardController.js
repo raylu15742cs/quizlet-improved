@@ -88,10 +88,72 @@ exports.card_create_get = (req, res, next) => {
 };
 
 // Handle card create on POST.
-exports.card_create_post = (req, res) => {
-  res.send("NOT IMPLEMENTED: card create POST");
-};
+exports.card_create_post = [
+  // Convert Topic to an array
+  (req, res, next) => {
+    if (!Array.isArray(req.body.topic)) {
+      req.body.topic =
+        typeof req.body.genre === 'undefinied ' ? [] : [req.body.genre];
+    }
+    next();
+  },
 
+  // Validate and sanitize fields
+  body('Card', 'Card Name must not be empty').trim().isLength({ min: 1 }).escape(),
+  body('Definition', 'Definition must not be empty').trim().isLength({ min: 1 }).escape(),
+  body("status").escape(),
+  body("topic.*").escape(),
+
+  // Process reqyest after validaton and sanitization
+  (req, res, next) => {
+    // Validation errors
+    const errors = validationResult(req);
+
+    const card = new Card({
+      card: req.body.card,
+      definition: req.body.definition,
+      status: req.body.status,
+      topic: req.body.topic
+    })
+    if (!errors.isEmpty()) {
+      // There are errors. Render form again with sanitized values/error messages.
+
+      // Get all authors and genres for form.
+      async.parallel(
+        {
+          topic(callback) {
+            Topic.find(callback)
+          },  
+        },
+        (err, results) => {
+          if (err) {
+            return next(err);
+          }
+          // Mark Topic selected
+          for (const topic of results.topic) {
+            if (card.topic.includes(topic._id)){
+              topic.checked = "true"
+            }
+          }
+          res.render("card_form", {
+            title: "Create Card",
+            topic: results.topic,
+            card,
+            errors: errors.array()
+          })
+        });
+        return
+      }
+      // Data from form is valid. Save card.
+    card.save((err) => {
+      if (err) {
+        return next(err);
+      }
+      // Successful: redirect to new card record.
+      res.redirect(card.url);
+    });
+  },
+];
 // Display card delete form on GET.
 exports.card_delete_get = (req, res) => {
   res.send("NOT IMPLEMENTED: card delete GET");
