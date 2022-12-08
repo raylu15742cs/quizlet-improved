@@ -103,13 +103,53 @@ exports.topic_create_post = [
 ];
 
 // Display topic delete form on GET.
-exports.topic_delete_get = (req, res) => {
-  res.send('NOT IMPLEMENTED: topic delete GET');
+exports.topic_delete_get = (req, res, next) => {
+  async.parallel(
+    {
+      topic(callback) {
+        Topic.findById(req.params.id).exec(callback);
+      },
+      topic_cards(callback) {
+        Card.find({topic: req.params.id}).exec(callback)
+      },
+    },
+    (err, results) => {
+      if(err) {
+        return next(err)
+      }
+      if (results.topic == null) {
+        // No Topic
+        res.redirect("./catalog/topics");
+      }
+      //Successful, so render delete form
+      res.render("topic_delete", {
+        title: "Delete Topic",
+        topic: results.topic,
+        topic_cards: results.authors_books,
+      })
+    }
+  )
 };
 
 // Handle topic delete on POST.
-exports.topic_delete_post = (req, res) => {
-  res.send('NOT IMPLEMENTED: topic delete POST');
+exports.topic_delete_post = (req, res, next) => {
+  async.parallel(
+    {
+      topic(callback) {
+        Topic.findById(req.params.id).exec(callback);
+      },
+      topic_cards(callback) {
+        Card.find({topic: req.params.id}).exec(callback)
+      }
+    },
+    (err, results) => {
+      if (err ) {
+        return next(err)
+      }
+      //Success
+      
+    }
+  )
 };
 
 // Display topic update form on GET.
