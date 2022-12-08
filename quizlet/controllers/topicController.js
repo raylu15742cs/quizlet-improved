@@ -2,6 +2,9 @@ const Topic = require('../models/topic');
 const Card = require("../models/card");
 
 const async = require("async")
+const { body, validationResult } = require('express-validator');
+const { getMaxListeners } = require('../models/card');
+
 
 // Display list of all topics.
 exports.topic_list = (req, res, next) => {
@@ -50,9 +53,50 @@ exports.topic_detail = (req, res, next) => {
 };
 
 // Display topic create form on GET.
-exports.topic_create_get = (req, res) => {
-  res.send('NOT IMPLEMENTED: topic create GET');
-};
+exports.topic_create_get = [
+  //Validate and Sanitize the field
+  bode("name", "No Topic Name").trim().isLength({min:1}).escape(),
+
+  // Process after validation and sanitization
+  (req, res, next) => {
+
+    // Validation errors from a request
+    const errors = validationResult(req)
+
+    // Create a topic object with trimmed data
+    const topic = new Topic({name: req.body.name});
+
+    if(!errors.isEmpty()){
+      // There is errors, so re render form with sanitized values and error messages
+      res.render("topic_form", {
+        title: "Create Topics",
+        topic,
+        errors: errors.array(),
+      })
+      return;
+    } else {
+      // Data form is valid (No Errors)
+      // Need to check if topic already exist
+      Topic.findOne({name: req.body.name}).exec((err, found_topuc) => {
+        if(err) {
+          return next(err)
+        }
+        if(found_topic) {
+          // Topic Exist, redirect to Topic Detail List
+          res.redirect(topic.url);
+        } else {
+          topic.save((err) => {
+            if(err) {
+              return next(err)
+            }
+            //Topic Saved
+            res.redirect(topic.url)
+          })
+        }
+      })
+    }
+  }
+]
 
 // Handle topic create on POST.
 exports.topic_create_post = (req, res) => {
