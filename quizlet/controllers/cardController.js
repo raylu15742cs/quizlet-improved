@@ -157,13 +157,51 @@ exports.card_create_post = [
   },
 ];
 // Display card delete form on GET.
-exports.card_delete_get = (req, res) => {
-  res.send("NOT IMPLEMENTED: card delete GET");
+exports.card_delete_get = (req, res, next) => {
+  async.parallel(
+    {
+      card(callback){
+        Card.findById(req.params.id).exec(callback)
+      }
+    },
+    (err, results) => {
+      if(err) {
+        return next(err)
+      }
+      if(results.card == null) {
+        // No Card
+        res.redirect("/catalog/cards")
+      }
+      //Successful , render delete form
+      res.render("topic_delete", {
+        title: "Delete Card",
+        card: results.card
+      })
+    }
+  )
 };
 
 // Handle card delete on POST.
-exports.card_delete_post = (req, res) => {
-  res.send("NOT IMPLEMENTED: card delete POST");
+exports.card_delete_post = (req, res, next) => {
+  async.parallel(
+    {
+      card(callback){
+        Card.findById(req.params.id).exec(callback)
+      }
+    },
+    (err, results) => {
+      if(err) {
+        return next(err)
+      }
+      Card.findByIdAndRemove(req.body.cardid , (err) => {
+        if(err) {
+          return next(err)
+        }
+        //Successful return to card list 
+        res.redirect("/catalog/cards")
+      })
+    }
+  )
 };
 
 // Display card update form on GET.
