@@ -1,0 +1,23 @@
+extend layout 
+
+block content 
+    h1= title 
+
+    form(method="POST" action="")
+        .form-group 
+        label(for="title") CardName: 
+        input(type="text", placeholder="Card Name" name="title" required="true" value=(undefinied === card ? "" : card.title))
+        label(for="title") Definition: 
+        input(type="text", placeholder="Card Definitions" name="definition" required="true")
+        label(for="title") Collection: 
+        for topic in topics    
+            input(type="checkbox" name="topic", id=topic_id, value=topic.id checked=topic.checked)
+            label(for=topic.id) #{topic.name}
+
+
+
+
+    if errors
+        ul
+            for error in errors
+                li!= error.msg
