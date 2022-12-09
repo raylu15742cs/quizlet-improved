@@ -5,7 +5,7 @@ block content
     ul(class="flex flex-wrap") 
         each card in card_list 
             li 
-                div(class="indCards rounded border-4 border-black px-5 py-7 m-3")
+                div(class="indCards rounded border-4 border-black px-2 py-2 m-3  h-[8vh] max-h-[500px]  max-w-[500px] text-center")
                     a(href=card.url class="text-2xl") #{card.card}
                     p Definition: #{card.definition}
                     p(class="text-sm") Status : #{card.status}

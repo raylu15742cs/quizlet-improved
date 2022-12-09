@@ -102,7 +102,7 @@ exports.card_create_post = [
 
   // Validate and sanitize fields
   body('card', 'Card Name must not be empty').trim().isLength({ min: 1 }).escape(),
-  body('definition', 'Definition must not be empty').trim().isLength({ min: 1 }).escape(),
+  body('definition', 'Definition must not be empty and less than 100 letters').trim().isLength({ min: 1 , max: 100 }).escape(),
   body("status").escape(),
   body("topic.*").escape(),
 
@@ -259,7 +259,7 @@ exports.card_update_post = [
 
   // Validate and sanitize fields
   body('card', 'Card Name must not be empty').trim().isLength({ min: 1 }).escape(),
-  body('definition', 'Definition must not be empty').trim().isLength({ min: 1 }).escape(),
+  body('definition', 'Definition must not be empty and less than 100 letters').trim().isLength({ min: 1, max: 100 }).escape(),
   body("status").escape(),
   body("topic.*").escape(),
 
