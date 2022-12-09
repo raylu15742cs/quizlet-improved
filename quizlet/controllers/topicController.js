@@ -54,7 +54,7 @@ exports.topic_detail = (req, res, next) => {
 
 // Display topic create form on GET.
 exports.topic_create_get = (req, res , next) => {
-  res.render("topic_form", {title: "Create Topic"})
+  res.render("topic_form", {title: "New Topic"})
 }
 
 // Handle topic create on POST.

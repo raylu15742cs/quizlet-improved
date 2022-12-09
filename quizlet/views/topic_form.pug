@@ -1,14 +1,14 @@
 extends layout 
 
 block content 
-    h1 #{title}
+    h1(class="text-3xl text-center ") #{title}
 
-    form(method="POST" action="" class)
-        div.form-group
-            label(for="name") Topic: 
-            input#name.form-control(type="text", placeholder="Python, JavaScript, Node" name="name" value=(undefined===topic ? '' : topic.name))
-        button(type="submit") Submit 
-    if errors 
-        ul 
-            for error in errors 
-                li!= error.msg
+    form(method="POST" action="")
+        div.form-group(class="my-5 flex flex-col items-center gap-5 ")
+            label(for="name" class="text-2xl") Topic Name: 
+                input#name.form-control(type="text", placeholder="Python" name="name" value=(undefined===topic ? '' : topic.name) class="rounder border-2 border-black")
+            button(type="submit" class="rounded border-2 border-black bg-[#fb4d3d] py-1 w-[200px]  max-w-90vw text-xl") Submit 
+            if errors 
+                ul(class="pt-10")
+                    for error in errors 
+                        li!= error.msg
