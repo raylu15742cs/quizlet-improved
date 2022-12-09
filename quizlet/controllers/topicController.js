@@ -15,7 +15,7 @@ exports.topic_list = (req, res, next) => {
       }
       //successful, so render
       res.render("topic_list", {
-        title: "Topic List",
+        title: "All Topics",
         topic_list: list_topics
       })
     })
