@@ -493,15 +493,6 @@ video {
   margin-bottom: 1.25rem;
 }
 
-.mx-3 {
-  margin-left: 0.75rem;
-  margin-right: 0.75rem;
-}
-
-.mt-5 {
-  margin-top: 1.25rem;
-}
-
 .mt-10 {
   margin-top: 2.5rem;
 }
@@ -512,6 +503,10 @@ video {
 
 .mr-1 {
   margin-right: 0.25rem;
+}
+
+.mt-5 {
+  margin-top: 1.25rem;
 }
 
 .block {
@@ -530,50 +525,41 @@ video {
   height: 170px;
 }
 
-.w-\[350px\] {
-  width: 350px;
-}
-
 .w-\[200px\] {
   width: 200px;
+}
+
+.w-\[350px\] {
+  width: 350px;
 }
 
 .w-\[300px\] {
   width: 300px;
 }
 
-.w-auto {
-  width: auto;
-}
-
-.min-w-\[100\%\] {
-  min-width: 100%;
-}
-
-.min-w-\[500px\] {
-  min-width: 500px;
-}
-
-.min-w-\[400px\] {
-  min-width: 400px;
+.w-\[100\%\] {
+  width: 100%;
 }
 
 .min-w-\[450px\] {
   min-width: 450px;
 }
 
-.max-w-\[95vw\] {
-  max-width: 95vw;
+.min-w-\[100\%\] {
+  min-width: 100%;
 }
 
-.max-w-max {
-  max-width: -moz-max-content;
-  max-width: max-content;
+.min-w-\[350px\] {
+  min-width: 350px;
 }
 
 .max-w-min {
   max-width: -moz-min-content;
   max-width: min-content;
+}
+
+.max-w-\[95vw\] {
+  max-width: 95vw;
 }
 
 .flex-col {
@@ -582,6 +568,10 @@ video {
 
 .flex-wrap {
   flex-wrap: wrap;
+}
+
+.content-center {
+  align-content: center;
 }
 
 .items-center {
@@ -606,10 +596,6 @@ video {
   align-self: center;
 }
 
-.justify-self-center {
-  justify-self: center;
-}
-
 .break-all {
   word-break: break-all;
 }
@@ -618,12 +604,12 @@ video {
   border-radius: 0.25rem;
 }
 
-.border-4 {
-  border-width: 4px;
-}
-
 .border-2 {
   border-width: 2px;
+}
+
+.border-4 {
+  border-width: 4px;
 }
 
 .border-black {
@@ -644,6 +630,11 @@ video {
   padding: 0.5rem;
 }
 
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -659,14 +650,9 @@ video {
   padding-right: 2.5rem;
 }
 
-.py-1 {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-}
-
-.px-3 {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
 .pb-10 {
@@ -691,14 +677,14 @@ video {
   line-height: 2rem;
 }
 
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .text-5xl {
