@@ -198,47 +198,43 @@ exports.topic_update_get = (req, res, next) => {
 
 // Handle topic update on POST.
 exports.topic_update_post = [
+  //Validate and Sanitize Topic Field
+  body("name", "Topic Name Required").trim().isLength({min:1}).escape(),
   (req, res, next) => {
+    const errors = validationResult(req);
 
-    //Validate and Sanitize the field
-    body('name', 'No Topic Name').trim().isLength({ min: 1 }).escape(),
+    const topic = new Topic({name: req.body.name, _id: req.params.id});
 
-    // Process request after valication
-    (req, res, next) => {
-      const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+      //Errors so re render with sanitized value and error message
+      res.render("topic_form", {
+        title: "Create Topic",
+        topic,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // data is value
+      // check if new is exisiting and should redirect there
+      Topic.findOne({name: req.body.name}).exec((err, found_topic) => {
+        if(err) {
+          return next(err);
+        }
 
-      // Create a topic object with trimmed data
-      const topic = new Topic({ name: req.body.name });
-
-      if(!errors.isEmpty()) {
-        // If there is error re render with sanited values and error
-        res.render("topic_form", {
-          title: "Create Topic",
-          topic,
-          errors: errors()
-        });
-        return
-      }
-        // Data is valid
-        //Check if Topic with existing name already exist
-        Topic.findOne({name: req.body.name}).exec((err, found_topic) => {
-          if(err) {
-            return next(err);
-          }
-          if(found_topic) {
-            // Topic already exist, redirect to details page
-            res.redirect(found_topic.url);
-          } 
-          Topic.findByIdAndUpdate(req.params.id, topic, {} , (err, thetopic) => {
-              if(err) {
-                return next(err)
-              }
-              // Topic saved and updated. Redirect to topic page
-              res.redirect(thetopic.url)
-            })
-          
-        })
-      }
+        if(found_topic) {
+          // Topic exist, redirect to it
+          res.redirect(found_topic.url);
+        } else {
+          // Update it
+          Topic.findByIdAndUpdate(req.params.id , topic , {}, (err, theTopic) => {
+            if(err) {
+              return next(err)
+            }
+            // Topic Update Saved, Redirect to that page
+            res.redirect(theTopic.url)
+          })
+        }
+      })
     }
-  
+  }
 ]
