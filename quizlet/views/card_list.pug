@@ -1,8 +1,8 @@
 extends layout 
 
 block content 
-    h1(class="text-3xl text-center mb-10")= title 
-    ul(class="flex flex-wrap justify-center ") 
+    h1(class="text-3xl text-center ")= title 
+    ul(class="flex flex-wrap justify-center m-10 ") 
         each card in card_list 
             li 
                 div(class=" break-all indCards rounded border-4 border-black px-2 py-2 m-3  h-[170px] w-[350px] max-w-[95vw] text-center flex flex-col justify-center ")
