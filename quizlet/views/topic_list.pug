@@ -1,13 +1,13 @@
 extends layout 
 
 block content 
-    h1= title 
-    ul 
+    h1(class="text-4xl text-center ")= title 
+    ul(class="flex flex-wrap justify-center my-10 mx-[10vw]") 
         each topic in topic_list 
             li
-                a(href=topic.url) #{topic.name}
+                div(class=" break-all indCards rounded border-4 border-black px-2 py-2 m-3  h-[170px] w-[350px] max-w-[95vw] text-center flex flex-col justify-center text-3xl")
+                    a(href=topic.url) #{topic.name}
         else    
             li There is no topics
-    hr
-    p
+    p(class="rounded border-2 border-black bg-[#fb4d3d] p-5 mx-auto flex justify-center w-[200px] max-w-90vw text-xl")
         a(href='/catalog/topic/create') Create New Topic
