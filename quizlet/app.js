@@ -14,8 +14,10 @@ var app = express();
 
 // Set up mongoose connection
 const mongoose = require("mongoose");
-const mongoDB =
+// Set up mongoose connection
+const dev_db_url =
   'mongodb+srv://admin:quizletpassword@cluster0.leazbtm.mongodb.net/?retryWrites=true&w=majority';
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
