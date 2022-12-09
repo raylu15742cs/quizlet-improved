@@ -218,7 +218,7 @@ exports.topic_update_post = [
           errors: errors()
         });
         return
-      } else {
+      }
         // Data is valid
         //Check if Topic with existing name already exist
         Topic.findOne({name: req.body.name}).exec((err, found_topic) => {
@@ -228,17 +228,17 @@ exports.topic_update_post = [
           if(found_topic) {
             // Topic already exist, redirect to details page
             res.redirect(found_topic.url);
-          } else {
-            Topic.findByIdAndUpdate(req.params.id, topic, {} , (err, thetopic) => {
+          } 
+          Topic.findByIdAndUpdate(req.params.id, topic, {} , (err, thetopic) => {
               if(err) {
                 return next(err)
               }
               // Topic saved and updated. Redirect to topic page
               res.redirect(thetopic.url)
             })
-          }
+          
         })
       }
     }
-  }
+  
 ]
