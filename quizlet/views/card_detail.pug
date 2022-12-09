@@ -10,7 +10,7 @@ block content
                 for topics, index in card.topic
                     
                     a=` ${card.topic[index].name}`
-    p(class="rounded border-2 border-black bg-[#fb4d3d] p-5 mx-auto flex justify-center w-[200px] max-w-90vw text-xl")
+    p(class="rounded border-2 border-black bg-[#fb4d3d] p-5 mx-auto flex justify-center w-[90vw] max-w-[300px] text-xl")
         a(href=card.url+'/delete') Delete Card
-    p(class="rounded border-2 border-black bg-[#fb4d3d] p-5  mx-auto flex justify-center w-[200px] max-w-90vw text-xl" style="margin-top:10px;")
+    p(class="rounded border-2 border-black bg-[#fb4d3d] p-5  mx-auto flex justify-center w-[90vw] max-w-[300px] text-xl" style="margin-top:10px;")
         a(href=card.url+'/update') Update Card

@@ -7,7 +7,7 @@ block content
         div.form-group(class="my-5 flex flex-col items-center gap-5 ")
             label(for="name" class="text-2xl") Topic Name: 
                 input#name.form-control(type="text", placeholder="Python" name="name" value=(undefined===topic ? '' : topic.name) class="rounder border-2 border-black")
-            button(type="submit" class="rounded border-2 border-black bg-[#fb4d3d] py-1 w-[200px]  max-w-90vw text-xl") Submit 
+            button(type="submit" class="rounded border-2 border-black bg-[#fb4d3d] py-1 w-[90vw] max-w-[300px] text-xl") Submit 
             if errors 
                 ul(class="pt-10")
                     for error in errors 
