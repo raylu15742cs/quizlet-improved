@@ -2,15 +2,14 @@ extends layout
 
 block content 
     h1(class="text-3xl text-center mb-10")= title 
-    ul(class="flex flex-wrap") 
+    ul(class="flex flex-wrap justify-center ") 
         each card in card_list 
             li 
-                div(class="indCards rounded border-4 border-black px-2 py-2 m-3  h-[8vh] max-h-[500px]  max-w-[500px] text-center")
+                div(class=" break-all indCards rounded border-4 border-black px-2 py-2 m-3  h-[170px] w-[350px] max-w-[95vw] text-center flex flex-col justify-center ")
                     a(href=card.url class="text-2xl") #{card.card}
                     p Definition: #{card.definition}
                     p(class="text-sm") Status : #{card.status}
         else 
             li There are no books
-    hr
     p
-        a(href='/catalog/card/create') Add New Card
+        a(href='/catalog/card/create' class="rounded border-2 border-black bg-[#005cf5] p-5 mx-auto flex justify-center w-[200px] max-w-90vw") Add New Card
