@@ -1,18 +1,18 @@
 extend layout 
 
 block content 
-    h1 #{title}: #{topic.name}
+    h1(class="text-3xl text-center ") #{title}: #{topic.name}
     if topic_cards.length  
 
-        p #[strong Delete the following cards before attempting to delete this topics.]
-        div     
-            h4 Cards 
-            dl 
-            each card in topic_cards 
-                dt 
-                    a(href=card.url) #{card.card} 
+        p(class="text-center mt-5") #[strong Delete the following cards before attempting to delete this topics.]
+        dl(class="flex flex-wrap justify-center my-10 mx-[10vw]")
+            each card in topic_cards    
+                div(class=" break-all indCards rounded border-4 border-black px-2 py-2 m-3  h-[170px] w-[350px] max-w-[95vw] text-center flex flex-col justify-center ")
+                    a(href=card.url class="text-2xl") #{card.card}
+                    p Definition: #{card.definition}
+                    p(class="text-sm") Status : #{card.status}
     else 
-        p Do you really want to delete this Topic?
+        p(class="text-center my-5") #[strong Do you really want to delete #{topic.name}]
         form(method="POST" action="")
             input(type="hidden", name="topicid", required="true", value=topic._id)
-            button(type="submit") Delete
+            button(type="submit" class="rounded border-2 border-black bg-[#fb4d3d] p-5 mx-auto flex justify-center w-[300px] max-w-90vw text-md") Delete #{topic.name}
