@@ -33,7 +33,7 @@ exports.card_list = (req, res, next) => {
         if(err) {
           return next(err)
         }
-        res.render("card_list", {title: "Card List", card_list: list_cards})
+        res.render("card_list", {title: "All Flash Cards", card_list: list_cards})
       })
 }
 
