@@ -1,25 +1,25 @@
 extend layout 
 
 block content 
-    h1= title 
+    h1(class="text-3xl text-center ")= title 
 
-    form(method="POST" action="")
-        .form-group(class="flex flex-col")
+    form(method="POST" action="" class="flex justify-center text-2xl mt-10")
+        .form-group(class="flex flex-col gap-5 rounder border-2 border-black p-5 min-w-[450px] max-w-min")
             label(for="title") CardName: 
-                input(type="text", placeholder="Card Name" name="card" required="true" value=(undefined===card ? '' : card.card))
+                input(type="text", placeholder="2 + 2" name="card" required="true" value=(undefined===card ? '' : card.card) class=" p-2 rounder border-2 border-black ml-3")
             label(for="definition") Definition: 
-                input(type="text", placeholder="Card Definitions" name="definition" required="true" value=(undefined===card ? '' : card.definition))
-            label(for="topic") Collection: 
-                for topic in topics    
-                    input(type="checkbox", name="topic", id=topic_id, value=topic.id checked=topic.checked)
-                    label(for=topic._id) #{topic.name}
+                input(type="text", placeholder="4" name="definition" required="true" value=(undefined===card ? '' : card.definition) class=" p-2 rounder border-2 border-black ml-3")
+            label(for="topic" class="text-center") Topic:
+                for topic in topics   
+                        input(type="checkbox", name="topic", id=topic_id, value=topic.id checked=topic.checked class="ml-3 mr-1" )
+                        label(for=topic._id ) #{topic.name}
             label(for="status") Status:
-            select(type="select" placeholder="Select Status" name="status" required="true")
-                option(value="Beginner") Beginner
-                option(value="Intermediate") Intermediate
-                option(value="Advance") Advance
-                option(value="Master") Master  
-        button(type="submit") Submit
+                select(type="select" placeholder="Select Status" name="status" required="true" class="rounder border-2 border-black ml-3")
+                    option(value="Beginner") Beginner
+                    option(value="Intermediate") Intermediate
+                    option(value="Advance") Advance
+                    option(value="Master") Master  
+            button(type="submit" class=" self-center rounded border-2 border-black bg-[#fb4d3d] py-1 w-[200px]  max-w-90vw text-xl") Create
 
 
 
