@@ -61,6 +61,7 @@ exports.topic_create_get = (req, res , next) => {
 exports.topic_create_post = [
   //Validate and Sanitize the field
   body('name', 'No Topic Name').trim().isLength({ min: 1 }).escape(),
+  body('password', 'incorrect password').trim().contains('password', { ignoreCase: true}),
 
   // Process after validation and sanitization
   (req, res, next) => {
