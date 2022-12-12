@@ -16,7 +16,7 @@ block content
         form(method="POST" action="")
             input(type="hidden", name="topicid", required="true", value=topic._id)
             label(for="password" class="text-xl flex justify-center pb-10") Password :
-                input( name="password" type="text" class="rounder border-2  border-black")
+                input( name="password" type="password" class="rounder border-2  border-black")
             button(type="submit" class="rounded border-2 border-black bg-[#fb4d3d] p-5 mx-auto flex justify-center w-[90vw] max-w-[300px] text-md") Delete #{topic.name}
             if errors 
                 ul(class="pt-10")

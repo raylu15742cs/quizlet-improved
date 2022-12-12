@@ -5,4 +5,10 @@ block content
     p(class="text-center my-5") #[strong Do you really want to delete #{card.card}]
     form(method="POST" action="")
         input(type="hidden", name="cardid", required="true", value=card._id)
+        label(for="password" class="text-xl flex justify-center pb-10") Password :
+                input( name="password" type="password" class="rounder border-2  border-black")
         button(type="submit" class="rounded border-2 border-black bg-[#fb4d3d] p-5 mx-auto flex justify-center w-[90vw] max-w-[300px] text-md") Delete
+    if errors 
+        ul(class="pt-10")
+            for error in errors 
+                li(class="text-center pt-5")!= error.msg

@@ -94,19 +94,27 @@ exports.card_create_post = [
   // Convert Topic to an array
   (req, res, next) => {
     if (!Array.isArray(req.body.topic)) {
-      console.log(req.body.topic)
+      console.log(req.body.topic);
       req.body.topic =
-        typeof req.body.genre==='undefined' ? [] : [req.body.genre];
+        typeof req.body.genre === 'undefined' ? [] : [req.body.genre];
     }
     next();
   },
 
   // Validate and sanitize fields
-  body('card', 'Card Name must not be empty').trim().isLength({ min: 1 }).escape(),
-  body('definition', 'Definition must not be empty and less than 100 letters').trim().isLength({ min: 1 , max: 100 }).escape(),
-  body("status").escape(),
-  body("topic.*").escape(),
-  body('password', 'incorrect password').trim().contains('password'),
+  body('card', 'Card Name must not be empty')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('definition', 'Definition must not be empty and less than 100 letters')
+    .trim()
+    .isLength({ min: 1, max: 100 })
+    .escape(),
+  body('status').escape(),
+  body('topic.*').escape(),
+  body('password', 'incorrect password')
+    .trim()
+    .contains(process.env.SECRET_KEY),
 
   // Process reqyest after validaton and sanitization
   (req, res, next) => {
@@ -117,8 +125,8 @@ exports.card_create_post = [
       card: req.body.card,
       definition: req.body.definition,
       status: req.body.status,
-      topic: req.body.topic
-    })
+      topic: req.body.topic,
+    });
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/error messages.
 
@@ -126,8 +134,8 @@ exports.card_create_post = [
       async.parallel(
         {
           topics(callback) {
-            Topic.find(callback)
-          },  
+            Topic.find(callback);
+          },
         },
         (err, results) => {
           if (err) {
@@ -135,22 +143,23 @@ exports.card_create_post = [
           }
           // Mark Topic selected
           for (const topic of results.topics) {
-            if (card.topic.includes(topic._id)){
-              topic.checked = "true"
+            if (card.topic.includes(topic._id)) {
+              topic.checked = 'true';
             }
           }
-          res.render("card_form", {
-            title: "Create Card",
+          res.render('card_form', {
+            title: 'Create Card',
             topics: results.topics,
             card,
-            errors: errors.array()
-          })
-        });
-        return
-      }
-      // Data from form is valid. Save card.
+            errors: errors.array(),
+          });
+        }
+      );
+      return;
+    }
+    // Data from form is valid. Save card.
     card.save((err) => {
-      console.log("made it here")
+      console.log('made it here');
       if (err) {
         return next(err);
       }
@@ -185,8 +194,33 @@ exports.card_delete_get = (req, res, next) => {
 };
 
 // Handle card delete on POST.
-exports.card_delete_post = (req, res, next) => {
-  async.parallel(
+exports.card_delete_post = [
+  body('password', 'incorrect password').trim().contains(process.env.SECRET_KEY),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+      async.parallel(
+        {
+          card(callback) {
+            Card.findById(req.params.id).exec(callback)
+          }
+        },
+        (err, results) => {
+          if(err) {
+            return next(err)
+          }
+          res.render("card_delete", {
+            title: "Delete Card",
+            card: results.card,
+            errors: errors.array()
+          })
+        }
+      )
+      return
+    } else {
+      async.parallel(
     {
       card(callback){
         Card.findById(req.params.id).exec(callback)
@@ -205,7 +239,11 @@ exports.card_delete_post = (req, res, next) => {
       })
     }
   )
-};
+
+    }
+  }
+]
+
 
 // Display card update form on GET.
 exports.card_update_get = (req, res, next) => {
@@ -264,7 +302,7 @@ exports.card_update_post = [
   body('definition', 'Definition must not be empty and less than 100 letters').trim().isLength({ min: 1, max: 100 }).escape(),
   body("status").escape(),
   body("topic.*").escape(),
-  body('password', 'incorrect password').trim().contains('password'),
+  body('password', 'incorrect password').trim().contains(process.env.SECRET_KEY),
 
   // Process request after validation and sanitization
   (req, res , next) => {
