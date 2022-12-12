@@ -104,7 +104,8 @@ exports.card_create_post = [
   body('card', 'Card Name must not be empty').trim().isLength({ min: 1 }).escape(),
   body('definition', 'Definition must not be empty and less than 100 letters').trim().isLength({ min: 1 , max: 100 }).escape(),
   body("status").escape(),
-  body("topic.*").escape(),body('password', 'incorrect password').trim().contains('password'),
+  body("topic.*").escape(),
+  body('password', 'incorrect password').trim().contains('password'),
 
   // Process reqyest after validaton and sanitization
   (req, res, next) => {
