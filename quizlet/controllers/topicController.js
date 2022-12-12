@@ -1,5 +1,6 @@
 const Topic = require('../models/topic');
 const Card = require("../models/card");
+require('dotenv').config();
 
 const async = require("async")
 const { body, validationResult } = require('express-validator');
@@ -61,7 +62,7 @@ exports.topic_create_get = (req, res , next) => {
 exports.topic_create_post = [
   //Validate and Sanitize the field
   body('name', 'No Topic Name').trim().isLength({ min: 1 }).escape(),
-  body('password', 'incorrect password').trim().contains('password'),
+  body('password', 'incorrect password').trim().contains(process.env.SECRET_KEY),
 
   // Process after validation and sanitization
   (req, res, next) => {
@@ -134,13 +135,13 @@ exports.topic_delete_get = (req, res, next) => {
 
 // Handle topic delete on POST.
 exports.topic_delete_post = [
-  body('password', 'incorrect password').trim().contains('password'),
+  body('password', 'incorrect password').trim().contains(process.env.SECRET_KEY),
   (req, res, next) => {
     const errors = validationResult(req)
     
     if(!errors.isEmpty()) {
       // There is error so re render with error 
-      
+
     }
   }
 ];
@@ -215,7 +216,7 @@ exports.topic_update_get = (req, res, next) => {
 exports.topic_update_post = [
   //Validate and Sanitize Topic Field
   body("name", "Topic Name Required").trim().isLength({min:1}).escape(),
-  body('password', 'incorrect password').trim().contains('password'),
+  body('password', 'incorrect password').trim().contains(process.env.SECRET_KEY),
   (req, res, next) => {
     const errors = validationResult(req);
 

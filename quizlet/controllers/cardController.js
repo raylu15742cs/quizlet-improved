@@ -1,5 +1,6 @@
 const Card = require("../models/card");
 const Topic = require("../models/topic");
+require('dotenv').config();
 
 const async = require("async")
 const { body, validationResult } = require('express-validator');
