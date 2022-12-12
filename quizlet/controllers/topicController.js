@@ -125,6 +125,7 @@ exports.topic_delete_get = (req, res, next) => {
         res.redirect("./catalog/topics");
       }
       //Successful, so render delete form
+      console.log(results.topic_cards.length)
       res.render("topic_delete", {
         title: "Delete Topic",
         topic: results.topic,
@@ -141,52 +142,65 @@ exports.topic_delete_post = [
     const errors = validationResult(req)
 
     if(!errors.isEmpty()) {
-      currenttopic = Topic.findById(req.params.id)
-
-      res.render("topic_delete", {
-        title: "Delete Topic",
-        topic: currenttopic,
-        errors: errors.array()
-      })
+      async.parallel(
+        {
+          topic(callback) {
+            Topic.findById(req.params.id).exec(callback);
+          },
+          topic_cards(callback) {
+            Card.find({topic: req.params.id}).exec(callback)
+          }
+        },
+        (err , results) => {
+          if(err) {
+            return next(err)
+          }
+          res.render("topic_delete", {
+            title: "Delete Topic",
+            topic: results.topic,
+            topic_cards: results.topic_cards,
+            errors: errors.array()
+          });
+        }
+      )
+      return
+    } else {
+      async.parallel(
+        {
+          topic(callback) {
+            Topic.findById(req.params.id).exec(callback);
+          },
+          topic_cards(callback) {
+            Card.find({ topic: req.params.id }).exec(callback);
+          },
+        },
+        (err, results) => {
+          if (err) {
+            return next(err);
+          }
+          //Success
+          if (results.topic_cards.length > 0) {
+            // Topic still has cards / render back as get
+            res.render('topic_delete', {
+              title: 'Delete Topic',
+              topic: results.topic,
+              topic_cards: results.topic_cards,
+            });
+            return;
+          }
+          //Topic has no cards / Delete topic and return to list of topics
+          Topic.findByIdAndRemove(req.body.topicid, (err) => {
+            if (err) {
+              return next(err);
+            }
+            // Success return to topic list
+            res.redirect('/catalog/topics');
+          });
+        }
+      );
     }
-  }
+  } 
 ];
-
-// (req, res, next) => {
-//   async.parallel(
-//     {
-//       topic(callback) {
-//         Topic.findById(req.params.id).exec(callback);
-//       },
-//       topic_cards(callback) {
-//         Card.find({topic: req.params.id}).exec(callback)
-//       }
-//     },
-//     (err, results) => {
-//       if (err ) {
-//         return next(err)
-//       }
-//       //Success
-//       if(results.topic_cards.length > 0) {
-//         // Topic still has cards / render back as get
-//         res.render("topic_delete", {
-//           title: "Delete Topic",
-//           topic: results.topic,
-//           topic_cards: results.topic_cards
-//         });
-//         return;
-//       }
-//       //Topic has no cards / Delete topic and return to list of topics
-//       Topic.findByIdAndRemove(req.body.topicid , (err) => {
-//         if(err) {
-//           return next(err);
-//         }
-//         // Success return to topic list
-//         res.redirect("/catalog/topics")
-//       })
-//     }
-//   )
-// };
 
 
 
