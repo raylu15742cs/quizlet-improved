@@ -61,7 +61,7 @@ exports.topic_create_get = (req, res , next) => {
 exports.topic_create_post = [
   //Validate and Sanitize the field
   body('name', 'No Topic Name').trim().isLength({ min: 1 }).escape(),
-  body('password', 'incorrect password').trim().contains('password', { ignoreCase: true}),
+  body('password', 'incorrect password').trim().contains('password'),
 
   // Process after validation and sanitization
   (req, res, next) => {
@@ -169,6 +169,8 @@ exports.topic_delete_post = (req, res, next) => {
   )
 };
 
+
+
 // Display topic update form on GET.
 exports.topic_update_get = (req, res, next) => {
   // get Topic for form
@@ -201,6 +203,7 @@ exports.topic_update_get = (req, res, next) => {
 exports.topic_update_post = [
   //Validate and Sanitize Topic Field
   body("name", "Topic Name Required").trim().isLength({min:1}).escape(),
+  body('password', 'incorrect password').trim().contains('password'),
   (req, res, next) => {
     const errors = validationResult(req);
 

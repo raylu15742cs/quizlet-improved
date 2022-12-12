@@ -19,6 +19,8 @@ block content
                     option(value="Intermediate") Intermediate
                     option(value="Advance") Advance
                     option(value="Master") Master  
+            label(for="password" class="text-2xl") Password :
+                input( name="password" type="text" class="rounder border-2 border-black")
             button(type="submit" class=" self-center rounded border-2 border-black bg-[#fb4d3d] py-1 w-[90vw] max-w-[300px] text-xl") Create
 
 
@@ -27,4 +29,4 @@ block content
     if errors
         ul
             for error in errors
-                li!= error.msg
+                li(class="text-center")!= error.msg
