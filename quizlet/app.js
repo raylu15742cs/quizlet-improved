@@ -11,12 +11,13 @@ const compression = require('compression');
 const helmet = require('helmet');
 
 var app = express();
+require('dotenv').config();
 
 // Set up mongoose connection
 const mongoose = require("mongoose");
 // Set up mongoose connection
 const dev_db_url =
-  'mongodb+srv://admin:quizletpassword@cluster0.leazbtm.mongodb.net/?retryWrites=true&w=majority';
+  `mongodb+srv://admin:${process.env.Mongo_Password}@cluster0.leazbtm.mongodb.net/?retryWrites=true&w=majority`;
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
