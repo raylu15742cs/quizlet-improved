@@ -2,7 +2,7 @@ extend layout
 
 block content 
     h1(class="text-3xl text-center ") #{title}: #{topic.name}
-    if topic_cards.length  
+    if topic_cards  
 
         p(class="text-center mt-5") #[strong Delete the following cards before attempting to delete this topics.]
         dl(class="flex flex-wrap justify-center my-10 mx-[10vw]")

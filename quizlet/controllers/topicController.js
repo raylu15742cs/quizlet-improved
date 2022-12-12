@@ -5,6 +5,7 @@ require('dotenv').config();
 const async = require("async")
 const { body, validationResult } = require('express-validator');
 const { getMaxListeners } = require('../models/card');
+const topic = require('../models/topic');
 
 
 // Display list of all topics.
@@ -138,10 +139,15 @@ exports.topic_delete_post = [
   body('password', 'incorrect password').trim().contains(process.env.SECRET_KEY),
   (req, res, next) => {
     const errors = validationResult(req)
-    
-    if(!errors.isEmpty()) {
-      // There is error so re render with error 
 
+    if(!errors.isEmpty()) {
+      currenttopic = Topic.findById(req.params.id)
+
+      res.render("topic_delete", {
+        title: "Delete Topic",
+        topic: currenttopic,
+        errors: errors.array()
+      })
     }
   }
 ];
